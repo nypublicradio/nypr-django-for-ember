@@ -32,8 +32,7 @@ export function isInDom(id) {
 // of an Alien DOM. This will run on every django-page render, but should be a simple
 // no-op after one run.
 export function clearAlienDom() {
-  let root = config.environment === 'test' ? '#ember-testing' : 'body';
-  let notEmber = document.querySelectorAll(`${root} > :not(.ember-view), ${root} > head > link[rel=stylesheet]:not([href*=assets])`);
+  let notEmber = document.querySelectorAll('body > :not(.ember-view), head > link[rel=stylesheet]:not([href*=assets])');
   Array.from(notEmber).forEach(n => n.parentNode.removeChild(n));
   document.removeEventListener('click', alienEventListener);
 }
@@ -57,7 +56,7 @@ export function embeddedComponentSetup(root = document) {
   });
 }
 
-// An Alien DOM means clicks will escape Ember, so the django-page component also 
+// An Alien DOM means clicks will escape Ember, so the django-page component also
 // installs this click handler to capture clicks and send them back to Ember. We have
 // to use a closure in order to both capture the passed in component instance as
 // well as save the function for later removal from the global click event.
