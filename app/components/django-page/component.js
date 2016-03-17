@@ -28,6 +28,7 @@ function doRefresh() {
   }
 }
 
+
 export default Ember.Component.extend({
   legacyAnalytics: service(),
   router: Ember.inject.service('wnyc-routing'),
@@ -60,6 +61,7 @@ export default Ember.Component.extend({
           homepageCleanup();
         }
         installAlienListener(this);
+        doRefresh();
       } else {
         // otherwise clear out the dom and render our server-fetched content
         clearAlienDom();
