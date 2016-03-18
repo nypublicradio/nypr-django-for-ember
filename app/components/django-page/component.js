@@ -7,7 +7,6 @@ import {
   clearAlienDom,
   embeddedComponentSetup,
   installAlienListener,
-  sanitizeAlienDom
 } from '../../lib/alien-dom';
 
 const { $, get } = Ember;
@@ -60,7 +59,6 @@ export default Ember.Component.extend({
           homepageCleanup();
         }
         installAlienListener(this);
-        doRefresh();
       } else {
         // otherwise clear out the dom and render our server-fetched content
         clearAlienDom();
