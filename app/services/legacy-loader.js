@@ -55,6 +55,7 @@ export const runOnce = Object.freeze({
   'js/vendor/soundmanager2/v297a-20140901/soundmanager2.js': true,
   'js/lib/marionette/xd_player/core.js': true,
   'js/lib/marionette/xd_player/okra/core.js': true,
+<<<<<<< HEAD
   'www.google.com/jsapi': true,
   'maps.googleapis.com/maps/api/js': true,
   'www.google-analytics.com/analytics.js': true,
@@ -66,6 +67,22 @@ export const runOnce = Object.freeze({
   // async added by other scripts
   //'www-widgetapi.js': true,
   //'partner.googleadservices.com/gpt/pubads_impl_82.js': true,
+||||||| merged common ancestors
+  // from previous legacy loader commit
+  // TODO: test if we should only run these once
+  //'js/util.js': true,
+  //'js/lib/wnyc/jquery.js': true
+=======
+  'www-widgetapi.js': true,
+  '.*google.com/jsapi': true,
+  '.*google-analytics.*': true,
+  '.*googletagservices.*': true,
+  '.*googleadservices.*': true,
+  '.*quantserve.*': true,
+  '.*googleapis.*': true,
+  'assets/vendor.*.js': true,
+  'assets/overhaul.*.js': true,
+>>>>>>> alient dom sanitation didn't make sense when we have the script loader
 });
 
 import Ember from 'ember';
