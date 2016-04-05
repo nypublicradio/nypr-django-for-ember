@@ -27,6 +27,11 @@ function doRefresh() {
   }
 }
 
+function initializeImagesLoaded() {
+  imagesLoaded(document.body).on('progress', (i, image) => {
+    image.img.classList.add('is-loaded');
+  });
+}
 
 export default Ember.Component.extend({
   legacyAnalytics: service(),
@@ -59,6 +64,7 @@ export default Ember.Component.extend({
           homepageCleanup();
         }
         installAlienListener(this);
+        initializeImagesLoaded();
       } else {
         // otherwise clear out the dom and render our server-fetched content
         clearAlienDom();
@@ -67,14 +73,8 @@ export default Ember.Component.extend({
           // re-enable any overlaid content so that it can wormhole
           // itself into the server-rendered DOM.
           this.set('showingOverlay', true);
-          if (ENV.renderGoogleAds) {
-            doRefresh();
-          }
-
-          this.$().imagesLoaded().progress((i, image) => {
-            image.img.classList.add('is-loaded');
-          });
-
+          doRefresh();
+          initializeImagesLoaded();
         });
       }
     }
