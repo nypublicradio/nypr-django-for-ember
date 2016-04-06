@@ -32,7 +32,7 @@ export function beforeTeardown(/* element, page */) {
     .removeClass('subnavigation-open');
 
   // player.js listens for a story event with a handler defined on the wnyc object,
-  // which is triggered randomly; unbind here to avoid throwing undefined errors
+  // which is triggered by logic outside of Ember; unbind to avoid throwing errors
   $(window).off('unload storage');
 
   // The mailchimp popup signup form is badly behaved -- it insists on
