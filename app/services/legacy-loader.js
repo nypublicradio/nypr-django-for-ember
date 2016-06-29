@@ -56,6 +56,7 @@ export const runOnce = Object.freeze({
   'js/consoleFix.js': true,
   'js/swfobject.js': true,
   'js/vendor/underscore/underscore-1.4.4.js': true,
+  'js/vendor/backbone/plugins/localstorage/localstorage-1.1.0.js': true,
   'js/vendor/backbone/backbone-0.9.9.js': true,
   'js/vendor/backbone/backbone-1.0.0.js': true,
   'js/vendor/handlebars/handlebars-2.0.0.min.js': true,
@@ -81,7 +82,7 @@ export default Ember.Service.extend({
   router: Ember.inject.service('wnyc-routing'),
   init() {
     this._super();
-    this.modules = Object.create(null);
+    this.modules = window.WNYC_MODULES || Object.create(null);
     this.waiting = Object.create(null);
   },
 
