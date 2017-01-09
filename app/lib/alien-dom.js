@@ -1,5 +1,5 @@
+import config from 'wnyc-web-client/config/environment';
 import Ember from 'ember';
-import config from 'overhaul/config/environment';
 // The Alien DOM is a DOM that exists beyond the reaches of an Ember app's
 // understanding, i.e. an HTML document that is already present when the app boots.
 
@@ -21,7 +21,7 @@ export function isInDom(id) {
 export function clearAlienDom() {
   let root = config.environment === 'test' ? '#ember-testing' : 'body';
   let notEmber = document.querySelectorAll(`${root} > :not(.ember-view), ${root} > head > link[rel=stylesheet]:not([href*=assets])`);
-  
+
   Array.from(notEmber).forEach((n) => {
     n.parentNode.removeChild(n);
   });
@@ -94,7 +94,7 @@ export function addAlienLanding(id, coordinates) {
 }
 
 // this method could be a one line, but in testing it would open a new window,
-// so let's us override in testing with a method of our own, located at 
+// so let's us override in testing with a method of our own, located at
 // `window.assign`.
 export function assign(url) {
   if (Ember.testing) {
