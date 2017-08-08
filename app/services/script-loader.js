@@ -8,9 +8,9 @@
 
 import fetch from 'fetch';
 import Ember from 'ember';
-import { mangleJavascript } from '../lib/compat-hooks';
+import { mangleJavascript } from 'nypr-django-for-ember/utils/compat-hooks';
 const { Promise } = Ember.RSVP;
-import ENV from '../config/environment';
+import ENV from 'ember-get-config';
 
 export default Ember.Service.extend({
   asyncWriter: Ember.inject.service(),

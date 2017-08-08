@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import isJavascript from '../lib/is-js';
+import isJavascript from 'nypr-django-for-ember/utils/is-js';
 const { $ } = Ember;
 
 export default Ember.Service.extend({

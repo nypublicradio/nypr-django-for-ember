@@ -7,10 +7,10 @@
   out of the old JS.
 */
 import Ember from 'ember';
-import config from 'wnyc-web-client/config/environment';
-import { assign } from 'wnyc-web-client/lib/alien-dom';
-import { runOnce } from 'wnyc-web-client/services/legacy-loader';
-import { canonicalize } from 'wnyc-web-client/services/script-loader';
+import config from 'ember-get-config';
+import { assign } from 'nypr-django-for-ember/utils/alien-dom';
+import { runOnce } from 'nypr-django-for-ember/services/legacy-loader';
+import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
 const { $, get } = Ember;
 
 // This gets run by the django-page component right before tearing
