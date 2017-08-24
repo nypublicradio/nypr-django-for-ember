@@ -5,6 +5,6 @@ module('Unit | Utility | is js');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  let result = isJs();
+  let result = isJs(document.createElement('script'));
   assert.ok(result);
 });

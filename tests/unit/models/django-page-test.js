@@ -2,7 +2,7 @@ import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('django-page', 'Unit | Model | django page', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['service:html-parser', 'service:script-loader']
 });
 
 test('it exists', function(assert) {

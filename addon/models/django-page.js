@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { beforeAppend } from '../lib/compat-hooks';
-import isJavascript from '../lib/is-js';
+import { beforeAppend } from 'nypr-django-for-ember/utils/compat-hooks';
+import isJavascript from 'nypr-django-for-ember/utils/is-js';
 const { $ } = Ember;
 const { allSettled, Promise } = Ember.RSVP;
-import { embeddedComponentSetup } from '../lib/alien-dom';
+import { embeddedComponentSetup } from 'nypr-django-for-ember/utils/alien-dom';
 
 let scriptCounter = 0;
 
@@ -41,7 +41,9 @@ export default DS.Model.extend({
     if (channel) {
       try {
         json = JSON.parse(channel.textContent);
-      } catch(err) {}
+      } catch(err) {
+        // noop
+      }
       if (json) {
         return this.store.push(channelSerializer.normalizeResponse(this.store, channelModel, json, id, 'findRecord'));
       }
@@ -63,7 +65,9 @@ export default DS.Model.extend({
         args.content = el.getAttribute('data-text-content');
       } catch(e) {
         if (!Ember.testing) {
+          /* eslint-disable */
           console.warn('could not parse', el.getAttribute('data-ember-args'));
+          /* eslint-enable */
         }
         args = { error: e };
       }

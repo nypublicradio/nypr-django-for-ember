@@ -14,6 +14,11 @@ module.exports = function(defaults) {
     This build file does *not* influence how the addon or the app using it
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
+  // All legacy JS modules that are directly called from this ember
+  // app should be imported into the app's own build here. Notice that
+  // these are symlinked to their original locations in the puppy
+  // source.
+  app.import('bower_components/imagesloaded/imagesloaded.pkgd.js');
 
   return app.toTree();
 };

@@ -1,1 +1,1 @@
-export { default } from 'nypr-django-for-ember/utils/alien-dom';
+export { isInDom, clearAlienDom, unbindAlienListener, embeddedComponentSetup, installAlienListeners, addAlienLanding, assign } from 'nypr-django-for-ember/utils/alien-dom';
