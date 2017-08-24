@@ -63,10 +63,11 @@ export const runOnce = Object.freeze({
 });
 
 import Ember from 'ember';
-import ENV from '../config/environment';
+import ENV from 'ember-get-config';
 
 export default Ember.Service.extend({
   router: Ember.inject.service('wnyc-routing'),
+  
   init() {
     this._super();
     this.modules = window.WNYC_MODULES || Object.create(null);
@@ -98,6 +99,7 @@ export default Ember.Service.extend({
   _evaluate(name, fn) {
     if (this.modules[name] && runOnce[name]) {
       if (ENV.LOG_LEGACY_LOADER) {
+        /* eslint no-console: 0 */
         console.log("Not rerunning " + name);
       }
       return;

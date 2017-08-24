@@ -17,7 +17,9 @@ export default Ember.Service.extend({
         // text/html parsing is natively supported
         return (htmlString) => parser.parseFromString(htmlString, 'text/html');
       }
-    } catch (ex) {}
+    } catch (ex) {
+      // noop
+    }
 
     return function(htmlString) {
       var doc = document.implementation.createHTMLDocument("");
