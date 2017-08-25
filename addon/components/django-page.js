@@ -8,10 +8,13 @@ import {
   clearAlienDom,
 } from 'nypr-django-for-ember/utils/alien-dom';
 
+import layout from '../templates/components/django-page';
+
 const { get, computed } = Ember;
 let { wnycAdminRoot } = ENV;
 
 export default Ember.Component.extend(LegacySupportMixin, {
+  layout,
   router: service('wnyc-routing'),
   loadingType: computed('page', function() {
     let id = get(this, 'page.id') || '';
