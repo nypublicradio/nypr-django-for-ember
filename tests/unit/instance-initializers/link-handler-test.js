@@ -1,9 +1,6 @@
 import { module, test } from 'qunit';
 import { shouldHandleLink, normalizeHref } from 'nypr-django-for-ember/instance-initializers/link-handler';
-import ENV from 'ember-get-config';
-import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
-let { wnycURL } = ENV;
-wnycURL = canonicalize(wnycURL);
+let wnycURL = window.location.origin + '/'
 
 // don't actually need to initialize the app, since we're just testing how the
 // link handler deals with incoming href values

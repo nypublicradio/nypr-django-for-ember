@@ -2,7 +2,6 @@ import Ember from 'ember';
 import service from 'ember-service/inject';
 import ENV from 'ember-get-config';
 import LegacySupportMixin from 'nypr-django-for-ember/mixins/legacy-support';
-import BetaActionsMixin from 'nypr-django-for-ember/mixins/beta-actions';
 import {
   isInDom,
   embeddedComponentSetup,
@@ -12,9 +11,7 @@ import {
 const { get, computed } = Ember;
 let { wnycAdminRoot } = ENV;
 
-export default Ember.Component.extend(LegacySupportMixin, BetaActionsMixin, {
-  session: service(),
-  legacyAnalytics: service(),
+export default Ember.Component.extend(LegacySupportMixin, {
   router: service('wnyc-routing'),
   loadingType: computed('page', function() {
     let id = get(this, 'page.id') || '';
@@ -76,15 +73,6 @@ export default Ember.Component.extend(LegacySupportMixin, BetaActionsMixin, {
         });
 
       });
-    }
-  },
-
-  click(event) {
-    let legacyAnalytics = get(this, 'legacyAnalytics');
-    legacyAnalytics.dispatch(event);
-
-    if (this.isLegacyEvent(event)) {
-      return this.fireLegacyEvent(event.target);
     }
   },
 

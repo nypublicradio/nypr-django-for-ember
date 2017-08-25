@@ -1,8 +1,8 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:legacy-loader', 'Unit | Service | legacy loader', {
+moduleFor('service:wnyc-routing', 'Unit | Service | wnyc routing', {
   // Specify the other units that are required for this test.
-  needs: ['service:wnyc-routing']
+  // needs: ['service:foo']
 });
 
 // Replace this with your real tests.
