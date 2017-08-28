@@ -1,6 +1,10 @@
 // based on https://github.com/intercom/ember-href-to/blob/master/app/instance-initializers/browser/ember-href-to.js
+import ENV from 'ember-get-config';
 import Ember from 'ember';
+import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
 const { $ } = Ember;
+let { wnycURL } = ENV;
+wnycURL = canonicalize(wnycURL);
 
 function _trackEvent(data, instance) {
   let metrics = instance.lookup('service:metrics');
@@ -47,29 +51,18 @@ function _trackLegacyEvent(event, instance) {
   legacyAnalytics.dispatch(event);
 }
 
-function isExternalUrl(url) {
-  let urlParser = document.createElement('a');
-  url = url || '';
-  urlParser.href = url;
-  return (urlParser.host !== window.location.host);
-}
-
-export function normalizeHref(node, base = window.location.origin) {
+export function normalizeHref(node, base = location) {
   let href = node.getAttribute('href') || '';
   let url = new URL(href, base).toString();
   let isExternal = false;
-
   if (href.startsWith('#') || href.startsWith('mailto:')) {
     return {url, href, isExternal};
-  }
-  else if (isExternalUrl(url)) {
+  } else if (url.startsWith(wnycURL)) {
+    href = url.replace(wnycURL, '').replace(/^\//, '') || '/';
+  } else if (!href.startsWith('/')) {
     href = '';
     isExternal = true;
   }
-  else {
-    let urlParser = document.createElement('a');
-    urlParser.href = url;
-    href = urlParser.href.replace(urlParser.origin + '/', '')  }
   return {url, href, isExternal};
 }
 

@@ -13,13 +13,4 @@ test('it renders', function(assert) {
   this.render(hbs`{{django-page}}`);
 
   assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#django-page}}
-      template block text
-    {{/django-page}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
 });
