@@ -4,7 +4,6 @@ import { beforeAppend } from 'nypr-django-for-ember/utils/compat-hooks';
 import isJavascript from 'nypr-django-for-ember/utils/is-js';
 const { $ } = Ember;
 const { allSettled, Promise } = Ember.RSVP;
-import { embeddedComponentSetup } from 'nypr-django-for-ember/utils/alien-dom';
 
 let scriptCounter = 0;
 
@@ -126,7 +125,13 @@ export default DS.Model.extend({
       }
     });
 
-    embeddedComponentSetup(body);
+    // Embedded Ember components require an ID for ember-wormwhole to use them as a
+    // destination.
+    Array.from(body.querySelectorAll('[data-ember-component]')).forEach(function (el) {
+      el.id = el.id || Ember.guidFor(el);
+      el.setAttribute('data-text-content', el.textContent.trim());
+      el.textContent = '';
+    });
 
     // Styles, both inline and external, with their relative order maintained.
     let styles = Array.from(doc.querySelectorAll('style, link[rel=stylesheet]')).map(element => importNode(element));

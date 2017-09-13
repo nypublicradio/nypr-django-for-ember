@@ -4,7 +4,6 @@ import ENV from 'ember-get-config';
 import LegacySupportMixin from 'nypr-django-for-ember/mixins/legacy-support';
 import {
   isInDom,
-  embeddedComponentSetup,
   clearAlienDom,
 } from 'nypr-django-for-ember/utils/alien-dom';
 
@@ -41,10 +40,6 @@ export default Ember.Component.extend(LegacySupportMixin, {
     // content when we rerender.
     let page = this.get('page');
     if (page !== this._lastPage) {
-      if (isInDom(page.get('id'))) {
-        embeddedComponentSetup();
-      }
-
       this.set('showingOverlay', false);
     }
   },
