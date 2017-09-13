@@ -51,13 +51,19 @@ export default Ember.Service.extend({
       let postMangled = mangleJavascript(tag, src);
       if (postMangled) {
         let script = document.createElement('script');
+        let cursor = placeholderFor(tag);
         script.textContent = postMangled;
         script.type = 'text/javascript';
-        asyncWriter.cursorTo(placeholderFor(tag));
-
         // Since we have already preloaded and inlined the source,
-        // this will run it synchronously.
-        containerElement.appendChild(script);
+        // these appended scripts will run synchronously.
+        // If there's a cursor for this script, use that so it can be added
+        // to the same spot in the DOM it is expecting.
+        if (cursor) {
+          asyncWriter.cursorTo(cursor);
+          cursor.parentNode.insertBefore(script, cursor);
+        } else {
+          containerElement.appendChild(script);
+        }
 
         // Make sure any document.writes get their place at the head
         // of the stack before we move on
