@@ -74,26 +74,6 @@ export function mangleJavascript(scriptTag, sourceCode) {
   return sourceCode;
 }
 
-// on first-loads, ember will consume the document with which it was booted, so
-// we have to do some clean up regarding present ember asset scripts, ember views
-// and server-side DOM scripts
-export function serializeInlineDoc(inlineDoc) {
-  let toClean = [];
-
-  // By this point, ember has already booted a view into the Document, so
-  // we need to clean it from the version we save as our data model, otherwise
-  // we get problems from recursive ember views and ember trying to boot again
-  toClean.push(...inlineDoc.querySelectorAll('.ember-view'));
-  toClean.push(inlineDoc.querySelector('script[src*="assets/vendor"]'));
-  toClean.push(inlineDoc.querySelector('script[src*="assets/wnyc-web-client"]'));
-  toClean.push(inlineDoc.querySelector('link[href*="assets/vendor"]'));
-  toClean.push(inlineDoc.querySelector('link[href*="assets/wnyc-web-client"]'));
-
-  toClean.forEach(n => n && n.parentNode.removeChild(n));
-
-  return inlineDoc;
-}
-
 // retrieving this destinationPath failed, possibly because the server
 // redirected the request to a new destination which does not respect
 // our CORS request. reassign the url to the location and let's see
