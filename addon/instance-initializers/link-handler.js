@@ -1,10 +1,7 @@
 // based on https://github.com/intercom/ember-href-to/blob/master/app/instance-initializers/browser/ember-href-to.js
-import ENV from 'ember-get-config';
+import config from 'ember-get-config';
 import Ember from 'ember';
-import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
 const { $ } = Ember;
-let { wnycURL } = ENV;
-wnycURL = canonicalize(wnycURL);
 
 function _trackEvent(data, instance) {
   let metrics = instance.lookup('service:metrics');
@@ -57,8 +54,8 @@ export function normalizeHref(node, base = location) {
   let isExternal = false;
   if (href.startsWith('#') || href.startsWith('mailto:')) {
     return {url, href, isExternal};
-  } else if (url.startsWith(wnycURL)) {
-    href = url.replace(wnycURL, '').replace(/^\//, '') || '/';
+  } else if (url.startsWith(config.wnycURL)) {
+    href = url.replace(config.wnycURL, '').replace(/^\//, '') || '/';
   } else if (!href.startsWith('/')) {
     href = '';
     isExternal = true;
