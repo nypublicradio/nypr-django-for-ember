@@ -3,10 +3,6 @@ import Ember from 'ember';
 // The Alien DOM is a DOM that exists beyond the reaches of an Ember app's
 // understanding, i.e. an HTML document that is already present when the app boots.
 
-// This is assigned to in installAlienListeners so it can later be referenced for
-// removal from the click event.
-let alienClickListener;
-
 // When we are operating in progressive boot mode, Ember can detect if a requested
 // django-page model is already present by testing the requested id (the url path)
 // against a marker provided by django.
@@ -23,28 +19,6 @@ export function clearAlienDom() {
 
   Array.from(nodesToRemove).forEach((n) => {
     n.parentNode.removeChild(n);
-  });
-}
-
-export function unbindAlienListener() {
-  document.removeEventListener('click', alienClickListener);
-}
-
-// An Alien DOM means legacy events will escape Ember, so the django-page component also
-// installs these handlers to capture clicks and other events and send them back to Ember.
-// We have to use a closure in order to both capture the passed in component instance as
-// well as save the function for later removal from the global click event.
-export function installAlienListeners(component) {
-  alienClickListener = function(e) {
-    component.click(e);
-  };
-
-  document.addEventListener('click', alienClickListener, false);
-
-  window.imagesLoaded(document.body).on('progress', (i, image) => {
-    Ember.run(() => {
-      image.img.classList.add('is-loaded');
-    });
   });
 }
 
