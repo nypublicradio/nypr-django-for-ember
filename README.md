@@ -53,7 +53,7 @@ Second it can gracefully embed dynamic Ember content *inside* the server-rendere
 The above means "render the given Django page, then if comments are enabled, render the `story-comments` component inside the element with `id="comments"`". This is the key technique for gradually enhancing existing pages with new dynamic capability.
 
 ### Intercepting Clicks
-Capturing user clicks is critical to enable persistent navigation on the client. To that end, Second, it intercepts clicks on links in the content and converts them into Ember transitions. This is a critical step to enable persistence — we don't want a link to take the user back to the server.
+Capturing user clicks is critical to enable persistent navigation on the client. To that end, this addon includes a `link-handler` initializer which listens for clicks on the body and converts them into Ember transitions. This conversion only happens on appropriate links, i.e. does not match for a `data-ember-action` attribute, does not have an `ember-view` class, etc. 
 
 ### Script Loader Service
 The `script-loader` service solves one particular problem: during the initial rendering of a web page, `<script>` tags execute synchronously in order of appearance. But at any later point, newly created `<script>` tags run in unpredictable order. Much of the legacy Javascript assumes strict ordering. So the script loader manually retrieves and executes scripts in exactly the same order they would have run during initial page load.
