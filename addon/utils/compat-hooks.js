@@ -44,7 +44,7 @@ export function beforeTeardown(/* element, page */) {
 
 export function beforeAppend(element) {
   let container = document.createElement('div');
-  let legacyContent = element.querySelector('#site') || element.querySelector('#flatpage');
+  let legacyContent = element.querySelector('#site') || element.querySelector('#flatpage') || element.querySelector('.wqxr-main-contents');
   if (!legacyContent) {
     // maybe it's a flat page
     legacyContent = element;
