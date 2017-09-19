@@ -54,8 +54,8 @@ export function normalizeHref(node, base = location) {
   let isExternal = false;
   if (href.startsWith('#') || href.startsWith('mailto:')) {
     return {url, href, isExternal};
-  } else if (url.startsWith(config.wnycURL)) {
-    href = url.replace(config.wnycURL, '').replace(/^\//, '') || '/';
+  } else if (url.startsWith(config.webRoot)) {
+    href = url.replace(config.webRoot, '').replace(/^\//, '') || '/';
   } else if (!href.startsWith('/')) {
     href = '';
     isExternal = true;

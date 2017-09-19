@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import fetch from 'fetch';
-import ENV from 'ember-get-config';
+import config from 'ember-get-config';
 import { isInDom } from 'nypr-django-for-ember/utils/alien-dom';
 import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
 
@@ -16,13 +16,13 @@ export default DS.Adapter.extend({
     // we want.
     let url = '/';
     if (id === '/') {
-      if (ENV.betaTrials.isBetaSite) {
-        url = ENV.wnycBetaURL;
+      if (config.betaTrials.isBetaSite) {
+        url = config.wnycBetaURL;
       } else {
-        url = ENV.wnycURL;
+        url = config.webRoot;
       }
-    } else if (ENV.environment === 'test') {
-      url = ENV.wnycURL;
+    } else if (config.environment === 'test') {
+      url = config.webRoot;
     }
 
     return fetch(`${canonicalize(url)}${id === '/' ? '' : id}`, { headers: {'X-WNYC-EMBER':1}})
