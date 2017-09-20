@@ -10,7 +10,7 @@ import fetch from 'fetch';
 import Ember from 'ember';
 import { mangleJavascript } from 'nypr-django-for-ember/utils/compat-hooks';
 const { Promise } = Ember.RSVP;
-import ENV from 'ember-get-config';
+import config from 'ember-get-config';
 
 export default Ember.Service.extend({
   asyncWriter: Ember.inject.service(),
@@ -81,12 +81,12 @@ export function canonicalize(url) {
 // In order to fetch all the scripts via XHR without tripping CORs
 // violations, we are proxying them through our own server.
 function scriptURL(tag) {
-  let origin = canonicalize(ENV.wnycURL);
+  let origin = canonicalize(config.webRoot);
   let url = canonicalize(tag.attributes.src.value);
   if (url.indexOf(origin) === 0) {
     return url;
   } else {
-    return `${ENV.wnycAPI}/api/v1/dynamic-script-loader/?url=${encodeURIComponent(canonicalize(url))}`;
+    return `${config.publisherAPI}/v1/dynamic-script-loader/?url=${encodeURIComponent(canonicalize(url))}`;
   }
 }
 

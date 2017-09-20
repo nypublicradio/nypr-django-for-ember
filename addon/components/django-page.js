@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import service from 'ember-service/inject';
-import ENV from 'ember-get-config';
+import config from 'ember-get-config';
 import LegacySupportMixin from 'nypr-django-for-ember/mixins/legacy-support';
 import {
   isInDom,
@@ -10,7 +10,6 @@ import {
 import layout from '../templates/components/django-page';
 
 const { get, computed } = Ember;
-let { wnycAdminRoot } = ENV;
 
 export default Ember.Component.extend(LegacySupportMixin, {
   layout,
@@ -62,7 +61,7 @@ export default Ember.Component.extend(LegacySupportMixin, {
         this.set('showingOverlay', true);
 
         if (this.get('session.data.isStaff')) {
-          this.revealStaffLinks(this.$(), wnycAdminRoot);
+          this.revealStaffLinks(this.$(), config.adminRoot);
         }
         this.$().imagesLoaded().progress((i, image) => {
           Ember.run(() => {
