@@ -1,0 +1,269 @@
+@mixin btn {
+  appearance: none;
+  position: relative; // for transition icons
+  display: inline-block;
+  border-radius: 25px;
+  border: 2px solid;
+  border-color: rgba($lightgray, 0.2);
+
+  padding: 0px 13px;
+  color: $lightgray;
+  background: transparent;
+  font-size: 14px;
+  line-height: 34px;
+
+  cursor: pointer;
+
+  transition:
+    opacity $transition-timing,
+    background-color $transition-timing,
+    border-color $transition-timing,
+    color $transition-timing;
+
+  &:hover,
+  &:active {
+    border-color: rgba($darkgray, 0.2);
+    color: $gray;
+    opacity: 1;
+  }
+
+  &[disabled] {
+    opacity: 0.15;
+    cursor: not-allowed;
+  }
+
+  .touchevents &:hover {
+    border-color: initial;
+    color: initial;
+  }
+  
+  > * {
+    pointer-events: none;
+  }
+}
+
+@mixin thickbtn {
+  border-width: 2px;
+
+  &.btn--white {
+    border-color: white;
+    background-color: rgba(white, 0);
+
+    &:hover,
+    &:focus {
+      border-color: white;
+      background-color: rgba(white, 0.15);
+    }
+
+    &:active {
+      opacity: 0.60;
+    }
+  }
+}
+
+@mixin btn--circle {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  text-align: center;
+}
+
+@mixin blank-button {
+  appearance: none;
+  font-family: inherit;
+  @include fontsize(14);
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #333;
+  // IE doesn't support initial
+  color: initial;
+  text-align: left;
+  background-color: transparent;
+
+  transition:
+    opacity $transition-timing,
+    background-color $transition-timing,
+    border-color $transition-timing,
+    color $transition-timing;
+
+
+  &:not([disabled]) {
+    &:hover,
+    &:active {
+      background: none;
+      border: none;
+      color: inherit;
+    }
+  }
+
+  &[disabled] {
+    opacity: 0.15;
+    cursor: not-allowed;
+  }
+
+  .touchevents &:hover {
+    border-color: initial;
+    color: initial;
+  }
+}
+
+@mixin btn--fat {
+  width: 40px;
+  height: 40px;
+
+  .fa {
+    font-size: 18px;
+  }
+}
+
+@mixin btn--smalltext {
+  @include fontsize(12);
+}
+
+// A button with white text and a solid colored background
+@mixin btn--solid-color ($background-color: $gray, $hover-color: $darkgray) {
+  background-color: $background-color;
+  border-color: $background-color;
+  color: white;
+
+  &:not([disabled]) {
+    &:hover,
+    &:active {
+      outline: none;
+      background-color: $hover-color;
+      border-color: $hover-color;
+      color: white;
+      opacity: 1;
+    }
+  }
+}
+
+@mixin btn--white {
+  border-color: rgba(white, 0.2);
+  color: white;
+
+  &:not([disabled]) {
+    &:hover,
+    &:focus {
+      color: white;
+      border-color: rgba(white,.7);
+    }
+  }
+}
+
+/**
+ * Red Button:
+ * `.btn--red`
+ *
+ *      @example
+ *      button.btn.btn--red Click
+ */
+@mixin btn--red {
+  background-color: $red;
+  border-color: $red;
+  color: white;
+
+  &:not([disabled]) {
+    &:hover,
+    &:focus {
+      outline: none;
+      background-color: darken($red, 10%);
+      border-color: darken($red, 10%);
+      color: white;
+      opacity: 1;
+    }
+  }
+}
+
+/**
+ * Large Button:
+ * `.btn--large`
+ * It's a little bigger than your standard button.
+ *
+ *      @example
+ *      button.btn.btn--large Click Me, I'm Bigger!
+ */
+@mixin btn--large {
+  padding: 3px 18px;
+  line-height: 36px;
+  @include fontsize(16);
+}
+
+// Button with bold text
+@mixin btn--strongtext {
+  font-weight: 600;
+}
+
+// Button with facebook colors
+@mixin btn--facebook {
+  @include btn--solid-color(
+    $background-color: $facebook,
+    $hover-color: $facebook-hover
+    );
+}
+
+// Blue button
+@mixin btn--blue {
+  @include btn--solid-color(
+    $background-color: $blue,
+    $hover-color: $darkblue
+  );
+}
+
+// sometimes you need to manually control an element's
+// hover state with javascript because of weird
+// animaton/ember/liquid-fire stuff
+@mixin js-hover($props: (), $base: (), $hover: ()) {
+  @each $prop, $value in zip($props, $base) {
+    #{$prop}: #{$value};
+  }
+  // override the :hover pseudo-class to match the base state
+  &:hover {
+     @each $prop, $value in zip($props, $base) {
+      #{$prop}: #{$value};
+    }
+  }
+  // hover state will be controlled manually in javascript with .is-hovering class
+  // focus state for these buttons should match hover state
+  &.is-hovering,
+  &:focus {
+    @each $prop, $value in zip($props, $hover) {
+      #{$prop}: #{$value};
+    }
+  }
+}
+
+@mixin gray-btn-jshover {
+  @include js-hover(
+    $props:  (color,       border-color),
+    $base:   ($darkergray, rgba($lightgray, 0.2)),
+    $hover:  ($darkergray, rgba($darkgray, 0.3))
+  );
+}
+
+@mixin white-btn-jshover {
+  @include js-hover(
+    $props:  (color, border-color),
+    $base:   (white, rgba($lightgray, 0.6)),
+    $hover:  (white, white)
+  );
+}
+
+@mixin blue-btn-jshover {
+  @include js-hover(
+    $props:  (background-color, border-color),
+    $base:   ($blue, $blue),
+    $hover:  ($darkblue, $darkblue)
+  );
+}
+
+@mixin red-btn-jshover {
+  @include js-hover(
+    $props:  (background-color, border-color),
+    $base:   ($red, $red),
+    $hover:  ($darkred, $darkred)
+  );
+}

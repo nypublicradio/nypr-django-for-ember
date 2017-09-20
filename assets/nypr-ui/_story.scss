@@ -1,0 +1,137 @@
+article {
+  footer, section.text, section.transcript {
+    max-width: 630px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .story--interactive & {
+      max-width: 100%;
+    }
+  }
+
+  footer .text {
+    color: $lightgray;
+  }
+
+  .nypr-story-byline {
+    footer.text {
+      color: $lightgray;
+    }
+    .byline-producing-orgs {
+      display: flex;
+      justify-content: flex-start;
+      
+      span.separator {
+        white-space: pre;
+      }
+    }
+  }
+
+  figure {
+    margin-bottom: 30px;
+
+    img {
+      margin: 0 auto;
+    }
+  }
+
+  section {
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    h3, h4 {
+      margin-bottom: 0;
+    }
+
+    a {
+      border-bottom: 1px solid rgba(black, .1);
+    }
+
+    blockquote {
+      border-left: 4px solid $nearwhite;
+      padding-left: 20px;
+      font-size: 18px;
+      line-height: 1.6em;
+      font-weight: 700;
+    }
+
+    .storify, .embedded-image {
+      margin: 30px 0;
+    }
+  }
+
+  section.text {
+    font-size: 18px;
+    line-height: 1.875rem;
+
+    @include mq($mobile) {
+      font-size: 16px;
+      line-height: 1.7rem;
+    }
+  }
+
+
+
+  .nypr-story-audio-options .panel textarea {
+    white-space: normal;
+  }
+
+  /*slideshows are broken */
+  .slideshow {
+    display: none;
+  }
+}
+
+.nypr-story-show-sidebar-top {
+  .text .nudge-big p {
+    margin-bottom: 0;
+  }
+}
+
+/* style overrides for nypr tabs */
+.article-tabs.nypr-tabs {
+  .tablist-buffer {
+    border-bottom: none;
+  }
+  .nypr-tabs-tablist {
+    margin-bottom: 1.5rem;
+    max-width: 630px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  a.ivy-tabs-tab {
+    flex: 0 1 auto;
+    justify-content: flex-start;
+    @include fontsize(14);
+
+    font-weight: bold;
+    border: none;
+    border-bottom: 4px solid white;
+    background-color: white;
+    margin-right: 24px;
+    height: auto;
+    padding-bottom: 5px;
+
+    &.active {
+      border-bottom: 4px solid #d3008c;
+    }
+  }
+
+  .ivy-tabs-tabpanel {
+    display:none;
+    // opacity: 0;
+    // transition: opacity 250ms ease-in-out;
+    &.active {
+      display:block;
+      //opacity: 1;
+    }
+  }
+}
+
+/* audio options dropdown */
+.nypr-story-audio-options .ember-basic-dropdown-content {
+  font-weight: normal;
+  width: 240px;
+}
