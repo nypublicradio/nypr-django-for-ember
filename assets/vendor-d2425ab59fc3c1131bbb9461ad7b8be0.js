@@ -5113,22 +5113,22 @@ function s(e){if(e.status>=200&&e.status<300)return e
 var t=new Error(e)
 throw t.response=e,t}Object.defineProperty(e,"__esModule",{value:!0}),e.default=t.default.Adapter.extend({findRecord:function(e,t,a){if((0,i.isInDom)(a))return document
 var u="/"
-return"/"===a?u=r.default.betaTrials.isBetaSite?r.default.wnycBetaURL:r.default.wnycURL:"test"===r.default.environment&&(u=r.default.wnycURL),(0,n.default)(""+(0,o.canonicalize)(u)+("/"===a?"":a),{headers:{"X-WNYC-EMBER":1}}).then(s).then(function(e){return e.text()})},shouldBackgroundReloadRecord:function(){return!1}})}),define("nypr-django-for-ember/components/django-page",["exports","ember-service/inject","ember-get-config","nypr-django-for-ember/mixins/legacy-support","nypr-django-for-ember/utils/alien-dom","nypr-django-for-ember/templates/components/django-page"],function(e,t,n,r,i,o){"use strict"
+return"/"===a?u=r.default.betaTrials.isBetaSite?r.default.wnycBetaURL:r.default.webRoot:"test"===r.default.environment&&(u=r.default.webRoot),(0,n.default)(""+(0,o.canonicalize)(u)+("/"===a?"":a),{headers:{"X-WNYC-EMBER":1}}).then(s).then(function(e){return e.text()})},shouldBackgroundReloadRecord:function(){return!1}})}),define("nypr-django-for-ember/components/django-page",["exports","ember-service/inject","ember-get-config","nypr-django-for-ember/mixins/legacy-support","nypr-django-for-ember/utils/alien-dom","nypr-django-for-ember/templates/components/django-page"],function(e,t,n,r,i,o){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0})
-var s=Ember.get,a=Ember.computed,u=n.default.wnycAdminRoot
+var s=Ember.get,a=Ember.computed
 e.default=Ember.Component.extend(r.default,{layout:o.default,router:(0,t.default)("wnyc-routing"),loadingType:a("page",function(){switch((s(this,"page.id")||"").split("/")[0]){case"":return"index"
 case"shows":case"articles":case"series":case"tags":case"blogs":return"channel"
 case"story":return"story"
 default:return"legacy"}}),didReceiveAttrs:function(){this.get("page")!==this._lastPage&&this.set("showingOverlay",!1)},didRender:function(){var e=this,t=this.get("page")
 if(t!==this._lastPage){this._lastPage=t
-var n=this.$(".django-content")
-n.empty(),(0,i.isInDom)(t.get("id"))&&(0,i.clearAlienDom)(),this.get("page").appendTo(n).then(function(){e.set("showingOverlay",!0),e.get("session.data.isStaff")&&e.revealStaffLinks(e.$(),u),e.$().imagesLoaded().progress(function(e,t){Ember.run(function(){t.img.classList.add("is-loaded")})})})}},goToSearch:function(e){this.get("router").transitionTo("djangorendered",["search/"],{q:e})}})}),define("nypr-django-for-ember/instance-initializers/link-handler",["exports","ember-get-config"],function(e,t){"use strict"
+var r=this.$(".django-content")
+r.empty(),(0,i.isInDom)(t.get("id"))&&(0,i.clearAlienDom)(),this.get("page").appendTo(r).then(function(){e.set("showingOverlay",!0),e.get("session.data.isStaff")&&e.revealStaffLinks(e.$(),n.default.adminRoot),e.$().imagesLoaded().progress(function(e,t){Ember.run(function(){t.img.classList.add("is-loaded")})})})}},goToSearch:function(e){this.get("router").transitionTo("djangorendered",["search/"],{q:e})}})}),define("nypr-django-for-ember/instance-initializers/link-handler",["exports","ember-get-config"],function(e,t){"use strict"
 function n(e,t){var n=t.lookup("service:metrics"),r=e.trackingCategory,i=e.trackingAction,o="",s=null
 if(e.trackingModel){s=t.lookup("service:store").peekRecord("story",e.trackingModel)}var a=e.trackingRegion,u=e.trackingLabel
 u||(s&&(u=o=s.get("analyticsCode")),o&&s?u=a+":"+o:a&&(u=a))
 var l={category:r,action:i}
 u&&(l.label=u),s&&(l.model=s),n.trackEvent("GoogleAnalytics",l)}function r(e,t){t.lookup("service:legacy-analytics").dispatch(e)}function i(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:location,r=e.getAttribute("href")||"",i=new URL(r,n).toString(),o=!1
-return r.startsWith("#")||r.startsWith("mailto:")?{url:i,href:r,isExternal:o}:(i.startsWith(t.default.wnycURL)?r=i.replace(t.default.wnycURL,"").replace(/^\//,"")||"/":r.startsWith("/")||(r="",o=!0),{url:i,href:r,isExternal:o})}function o(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:location,n=i(e,t),r=n.href
+return r.startsWith("#")||r.startsWith("mailto:")?{url:i,href:r,isExternal:o}:(i.startsWith(t.default.webRoot)?r=i.replace(t.default.webRoot,"").replace(/^\//,"")||"/":r.startsWith("/")||(r="",o=!0),{url:i,href:r,isExternal:o})}function o(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:location,n=i(e,t),r=n.href
 return"_blank"!==e.getAttribute("target")&&(!Array.from(e.classList).includes("ember-view")&&(!e.getAttribute("data-ember-action")&&(!(!r||r.startsWith("#")||r.startsWith("?")||r.startsWith("mailto:"))&&!(r.split(".").length>1))))}Object.defineProperty(e,"__esModule",{value:!0}),e.normalizeHref=i,e.shouldHandleLink=o
 var s=Ember.$
 e.default={name:"link-handler",initialize:function(e){var t=e.lookup("service:wnyc-routing"),a=s(document.body)
@@ -5189,8 +5189,8 @@ if(this.modules[e]&&i[e])return void(t.default.LOG_LEGACY_LOADER&&console.log("N
 t.default.LOG_LEGACY_LOADER&&console.log("Running "+e),this.modules[e]=n,n(),this.waiting[e]&&setTimeout(function(){var t=r.waiting[e]
 r.waiting[e]=null,t.pending-=1,t.pending<1&&r._evaluate(t.name,t.fn)})}})})
 define("nypr-django-for-ember/services/script-loader",["exports","fetch","nypr-django-for-ember/utils/compat-hooks","ember-get-config"],function(e,t,n,r){"use strict"
-function i(e){return new URL(e,location.href).toString()}function o(e){var t=i(r.default.wnycURL),n=i(e.attributes.src.value)
-return 0===n.indexOf(t)?n:r.default.wnycAPI+"/api/v1/dynamic-script-loader/?url="+encodeURIComponent(i(n))}function s(e){return e.hasAttribute("src")?(0,t.default)(o(e)).then(function(e){return e.text()}):u.resolve(e.textContent)}function a(e){if(!e.hasAttribute("data-script-id"))return null
+function i(e){return new URL(e,location.href).toString()}function o(e){var t=i(r.default.webRoot),n=i(e.attributes.src.value)
+return 0===n.indexOf(t)?n:r.default.publisherAPI+"/v1/dynamic-script-loader/?url="+encodeURIComponent(i(n))}function s(e){return e.hasAttribute("src")?(0,t.default)(o(e)).then(function(e){return e.text()}):u.resolve(e.textContent)}function a(e){if(!e.hasAttribute("data-script-id"))return null
 var t=e.getAttribute("data-script-id")
 return document.querySelector('[data-script-id="'+t+'"]')}Object.defineProperty(e,"__esModule",{value:!0}),e.canonicalize=i
 var u=Ember.RSVP.Promise
@@ -5221,7 +5221,7 @@ for(var r=document.createElement("div");n.firstChild;)r.appendChild(n.firstChild
 t.appendChild(r)
 var i=e.querySelector("#wnyc-sitewide")
 return i&&t.appendChild(i),t}function a(e,t){return!Object.keys(r.runOnce).any(function(t){return e.src.match(t)})&&("bad url"!==t&&t)}function u(e,r){var o=e.response
-if(o&&(404===o.status||500===o.status))throw e;(0,n.assign)((0,i.canonicalize)(t.default.wnycURL)+"/"+r)}Object.defineProperty(e,"__esModule",{value:!0}),e.beforeTeardown=o,e.beforeAppend=s,e.mangleJavascript=a,e.retryFromServer=u
+if(o&&(404===o.status||500===o.status))throw e;(0,n.assign)((0,i.canonicalize)(t.default.webRoot)+"/"+r)}Object.defineProperty(e,"__esModule",{value:!0}),e.beforeTeardown=o,e.beforeAppend=s,e.mangleJavascript=a,e.retryFromServer=u
 var l=Ember.$,c=Ember.get}),define("nypr-django-for-ember/utils/is-js",["exports"],function(e){"use strict"
 function t(e){var t=e.attributes.type?e.attributes.type.value:"text/javascript"
 return!(e.src&&!e.src.match(/^http|^(\.)?\//))&&/(?:application|text)\/(deferred-)?javascript/i.test(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.default=t}),define("nypr-django-for-ember/utils/wrap-ajax",["exports"],function(e){"use strict"
