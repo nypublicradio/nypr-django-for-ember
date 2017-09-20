@@ -1,0 +1,6 @@
+{
+  "name": "nypr-django-for-ember",
+  "dependencies": {
+    "imagesloaded": "^4.1.3"
+  }
+}
