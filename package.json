@@ -1,7 +1,7 @@
 {
   "name": "nypr-django-for-ember",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Utilities to integrate and consume legacy content",
   "keywords": [
     "ember-addon"
   ],

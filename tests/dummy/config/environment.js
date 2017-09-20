@@ -45,7 +45,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.rootURL = '/nypr-django-for-ember';
+    ENV.locationType = 'hash';
   }
 
   return ENV;
