@@ -2,7 +2,6 @@ import DS from 'ember-data';
 import fetch from 'fetch';
 import config from 'ember-get-config';
 import { isInDom } from 'nypr-django-for-ember/utils/alien-dom';
-import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
 
 export default DS.Adapter.extend({
   findRecord(store, type, id /*, snapshot */) {
@@ -10,22 +9,7 @@ export default DS.Adapter.extend({
       return document;
     }
 
-    // django-page requests can be root-relative since we're always serving from our own domain
-    // except if the request is to the index route; in dev mode this will fail,
-    // since it always returns the index page. forcing the domain gets the html
-    // we want.
-    let url = '/';
-    if (id === '/') {
-      if (config.betaTrials.isBetaSite) {
-        url = config.wnycBetaURL;
-      } else {
-        url = config.webRoot;
-      }
-    } else if (config.environment === 'test') {
-      url = config.webRoot;
-    }
-
-    return fetch(`${canonicalize(url)}${id === '/' ? '' : id}`, { headers: {'X-WNYC-EMBER':1}})
+    return fetch(`${config.webRoot}/${id === '/' ? '' : id}`, { headers: {'X-WNYC-EMBER':1}})
       .then(checkStatus)
       .then(response => response.text());
   },
