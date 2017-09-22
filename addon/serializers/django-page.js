@@ -1,7 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import config from 'ember-get-config';
 
 export default DS.Serializer.extend({
+  // BEGIN-SNIPPET django-page-serializer
   normalizeResponse(store, primaryModelClass, payload, id /*, requestType */) {
     let attributes = {};
     if (payload instanceof Document) {
@@ -26,8 +28,10 @@ export default DS.Serializer.extend({
       }
     };
   }
+  // END-SNIPPET
 });
 
+// BEGIN-SNIPPET serialize-inline-doc
 // on cold boots, the app consumes the current `document`, so we have to do
 // some clean up to make sure that things like rendered Ember components and 
 // the <link> and <script> tags for the Ember app aren't consumed as part of the
@@ -45,3 +49,4 @@ function serializeInlineDoc(inlineDoc) {
 
   return inlineDoc;
 }
+// END-SNIPPET

@@ -5,11 +5,15 @@ import { isInDom } from 'nypr-django-for-ember/utils/alien-dom';
 
 export default DS.Adapter.extend({
   findRecord(store, type, id /*, snapshot */) {
+    // BEGIN-SNIPPET django-page-top
     if (isInDom(id)) {
       return document;
     }
-    let [path, query] = id.split('?');
+    // END-SNIPPET
 
+    // BEGIN-SNIPPET django-page-request
+    let [path, query] = id.split('?');
+    
     // publisher enforces trailing slashes
     // turn "search" into "search/" and "/" into ""
     path = path === '/' ? '' : path.replace(/\/*$/, '/');
@@ -19,6 +23,7 @@ export default DS.Adapter.extend({
     return fetch(`${config.webRoot}/${path}`, { headers: {'X-WNYC-EMBER':1}})
       .then(checkStatus)
       .then(response => response.text());
+    // END-SNIPPET
   },
   // starting in ember-data 2.0, this defaults to true
   // http://emberjs.com/blog/2015/06/18/ember-data-1-13-released.html#toc_new-adapter-hooks-for-better-caching

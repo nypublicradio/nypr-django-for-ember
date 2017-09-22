@@ -3,6 +3,7 @@ import Ember from 'ember';
 // The Alien DOM is a DOM that exists beyond the reaches of an Ember app's
 // understanding, i.e. an HTML document that is already present when the app boots.
 
+// BEGIN-SNIPPET is-in-dom
 // When we are operating in progressive boot mode, Ember can detect if a requested
 // django-page model is already present by testing the requested id (the url path)
 // against a marker provided by django.
@@ -10,6 +11,7 @@ export function isInDom(id) {
   let unrenderedMarker = document.querySelector('[type="text/x-wnyc-marker"]');
   return unrenderedMarker && id === unrenderedMarker.getAttribute('data-url');
 }
+// END-SNIPPET
 
 // When we have a django-page model ready to load, we need to clean out any remnants
 // of an Alien DOM. This will run on every django-page render, but should be a simple
