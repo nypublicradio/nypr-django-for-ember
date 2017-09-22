@@ -25,5 +25,5 @@ deployment:
   docs:
     branch: docs
     commands:
-      - git checkout gh-pages; git checkout master
+      - git checkout gh-pages; git checkout docs
       - ./node_modules/ember-cli/bin/ember deploy production
