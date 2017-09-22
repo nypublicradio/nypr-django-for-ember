@@ -21,7 +21,10 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    webRoot: 'https://wnyc.demo2.wnyc.net',
+    publisherAPI: 'https://api.demo.nypr.digital/api',
+    adminRoot: 'https://internal.demo2.wnyc.net'
   };
 
   if (environment === 'development') {
@@ -30,8 +33,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.webRoot = 'http://localhost:4567';
-    ENV.publisherAPI = 'http://localhost:4567/api';
   }
 
   if (environment === 'test') {
