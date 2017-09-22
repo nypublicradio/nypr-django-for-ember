@@ -11,8 +11,12 @@ export default DS.Adapter.extend({
     let [path, query] = id.split('?');
 
     // publisher enforces trailing slashes
-    path = path.replace(/\/*$/, '/');
-    return fetch(`${config.webRoot}/${path === '/' ? '' : path}${query ? `?${query}` : ''}`, { headers: {'X-WNYC-EMBER':1}})
+    // turn "search" into "search/" and "/" into ""
+    path = path === '/' ? '' : path.replace(/\/*$/, '/');
+    if (query) {
+      path = `${path}?${query}`;
+    }
+    return fetch(`${config.webRoot}/${path}`, { headers: {'X-WNYC-EMBER':1}})
       .then(checkStatus)
       .then(response => response.text());
   },
