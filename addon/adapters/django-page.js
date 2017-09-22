@@ -8,8 +8,11 @@ export default DS.Adapter.extend({
     if (isInDom(id)) {
       return document;
     }
+    let [path, query] = id.split('?');
 
-    return fetch(`${config.webRoot}/${id === '/' ? '' : id}`, { headers: {'X-WNYC-EMBER':1}})
+    // publisher enforces trailing slashes
+    path = path.replace(/\/*$/, '/');
+    return fetch(`${config.webRoot}/${path === '/' ? '' : path}${query ? `?${query}` : ''}`, { headers: {'X-WNYC-EMBER':1}})
       .then(checkStatus)
       .then(response => response.text());
   },
