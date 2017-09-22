@@ -15,6 +15,11 @@ export function isInDom(id) {
 // of an Alien DOM. This will run on every django-page render, but should be a simple
 // no-op after one run.
 export function clearAlienDom() {
+  let toRemove = config.alienDom.toRemove;
+  if (!toRemove) {
+    let root = config.environment === 'test' ? '#ember-testing' : 'body';
+    toRemove = `${root} > :not(.ember-view):not(#fb-root), ${root} > head > link[rel=stylesheet]:not([href*=assets])`;
+  }
   let nodesToRemove = document.querySelectorAll(config.alienDom.toRemove);
 
   Array.from(nodesToRemove).forEach((n) => {
