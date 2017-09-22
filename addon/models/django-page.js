@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import getOwner from 'ember-owner/get';
 import { beforeAppend } from 'nypr-django-for-ember/utils/compat-hooks';
 import isJavascript from 'nypr-django-for-ember/utils/is-js';
 const { $ } = Ember;
@@ -51,7 +52,13 @@ export default DS.Model.extend({
 
   embeddedEmberComponents: Ember.computed('pieces', function() {
     let doc = this.get('pieces.body');
+    let instance = getOwner(this);
     return Array.from(doc.querySelectorAll('[data-ember-component]')).map(el => {
+      let componentName = el.getAttribute('data-ember-component');
+      if (!instance.lookup(`component:${componentName}`)) {
+        console.warn(`${componentName} is not available in this app. Will not render embedded component ${componentName}.`); // eslint-disable-line
+        return false;
+      }
       let id = el.id;
       let args;
       try {
@@ -73,10 +80,10 @@ export default DS.Model.extend({
       }
       return {
         id,
-        componentName: el.getAttribute('data-ember-component'),
+        componentName,
         args
       };
-    });
+    }).filter(i => i !== false);
   }),
 
   appendStyles($element, styles) {
