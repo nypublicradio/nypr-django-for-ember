@@ -1,6 +1,5 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import config from 'ember-get-config';
 
 export default DS.Serializer.extend({
   // BEGIN-SNIPPET django-page-serializer
@@ -40,10 +39,7 @@ export default DS.Serializer.extend({
 function serializeInlineDoc(inlineDoc) {
   let toClean = [];
   toClean.push(...inlineDoc.querySelectorAll('.ember-view'));
-  toClean.push(inlineDoc.querySelector('script[src*="assets/vendor"]'));
-  toClean.push(inlineDoc.querySelector('script[src*="assets/wnyc-web-client"]'));
-  toClean.push(inlineDoc.querySelector('link[href*="assets/vendor"]'));
-  toClean.push(inlineDoc.querySelector('link[href*="assets/wnyc-web-client"]'));
+  toClean.push(...inlineDoc.querySelectorAll('[data-ember-asset]'));
 
   toClean.forEach(n => n && n.parentNode.removeChild(n));
 
