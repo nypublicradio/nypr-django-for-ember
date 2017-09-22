@@ -5,4 +5,10 @@
       <span class="site-tag">Ember utilities for a legacy backend</span>
     {{/nav.corner}}
   {{/chrome.nav}}
+  
+  {{#chrome.body}}
+    <div class="l-page">
+      {{outlet}}
+    </div>
+  {{/chrome.body}}
 {{/site-chrome}}

@@ -1,1 +1,74 @@
-{{django-page page=model}}
+{{md-text text="
+# `nypr-django-for-ember`
+
+This addon provides a `django-page` component and model which apps can use to access legacy HTML output from our publisher back end. Most upstream apps will usually only make use of the model and component to achieve this. There is also a small set of modules the component and model use in order to properly consume raw HTML and integrate it with a running ember app which are briefly covered in [the README](https://github.com/nypublicradio/nypr-django-for-ember/blob/master/README.md).
+
+## Install
+Add this addon to your ember app:
+```sh
+$ yarn add nypublicradio/nypr-django-for-ember
+```
+
+## Setup
+Define these config values in your ember app
+
+**Required Config**
+- `webRoot`: The domain root of your publisher web backend instance, i.e. the demo or dev address, or the live production address.
+  - default: `''`
+- `adminRoot`: The address to the admin backend
+  - default: `''`
+- `publisherAPI`: The full domain and path prefix for the publisher api. This is usually `webRoot + '/api'`.
+  - default: `''`
+
+**Optional Config**
+- `alienDom.toRemove`: A CSS selector chain of static, non-ember DOM nodes to remove before rendering a `django-page` component. Normally used to clean up DOM nodes initially returned by the server on a cold-boot. For more on the Alien DOM, see [the README](https://github.com/nypublicradio/nypr-django-for-ember/blob/master/README.md#alien-doms).
+  - default: `body > :not(.ember-view):not(#fb-root), body > head > link[rel=stylesheet]:not([href*=assets])`
+
+## Loading a legacy page in an ember app
+To do this, you will set up a route to fetch a back end page based on its URI path. Let's say you want to load in the about page at `http://wnyc.demo2.wnyc.net/about`. 
+
+First make sure your config values are set.
+```javascript
+// app/config/environment.js
+module.exports = function(environment) {
+  let ENV = {
+    ...
+    webRoot: 'https://wnyc.demo2.wnyc.net',
+    publisherAPI: 'https://api.demo.nypr.digital/api',
+    adminRoot: 'https://internal.demo2.wnyc.net'
+    ...
+  };
+  ...
+};
+```
+
+The actual store look up has been put in an action here for demonstration, but this kind of thing would normally go in the model hook of a route. Let's say you have an action like this:
+"}}
+{{code-snippet name="find-page.js"}}
+{{md-text text="
+And for our purposes we'll have a button hooked up to the action like so:
+"}}
+{{code-snippet name="about-page-button.hbs"}}
+{{md-text text="
+And finally, we'll use the `django-page` component to render out the fetched model, passing it in as the `page` param to the component.
+"}}
+{{code-snippet name="about-page-component.hbs"}}
+<p>
+  Click the button below to see the HTML document returned from the server rendered in an ember component, and then continue on to {{link-to 'internals' 'internals'}} for deeper dive into what's happening.
+</p>
+<p>
+  <strong>Note this page will scroll to the top when you click load.</strong> Scroll back down here to see the loaded page.
+</p>
+{{! BEGIN-SNIPPET about-page-button }}
+<button {{action 'getAboutPage'}}>Load /about</button>
+{{! END-SNIPPET }}
+{{! BEGIN-SNIPPET about-page-component }}
+{{#if about}}
+  {{django-page page=about}}
+  
+  <hr />
+  <p>
+    Continue to {{link-to 'internals' 'internals'}}.
+  </p>
+{{/if}}
+{{! END-SNIPPET }}
