@@ -1,0 +1,28 @@
+{{md-text text="
+## Internals
+
+### `django-page` Adapter
+So, when that `django-page` with the id of `about` is looked up from the store, what's actually happening?
+
+The adapter first checks to see if this ember app is running with a DOM that was fully generated server-side. 
+
+When this addon makes a request to the legacy back end, it includes the header `X-WNYC-EMBER`, which the publisher back end is configured to look for. When a request comes in **without** that header, publisher will include a special script tag. This tag allows ember to know that when it boots, it has a local DOM available, which should be used for its first render.
+
+At the top of the `django-page` adapter, there's this block:
+"}}
+{{code-snippet name="django-page-top.js"}}
+
+{{md-text text="With `isInDom` defined like so:"}}
+{{code-snippet name="is-in-dom.js"}}
+
+{{md-text text="
+If the `isInDom` check fails, the adapter will make a network request using the given `id` a URI path and the `webRoot` config value as the domain:
+"}}
+{{code-snippet name="django-page-request.js"}}
+
+{{md-text text="
+The first complication is that this adapter can return either a `Document` object or a blob of text as returned from a remote server. The serializer compensates for this
+
+### `django-page` Serializer
+If the `django-page` serializer receives a valid `Document`, it will make a copy, 
+"}}

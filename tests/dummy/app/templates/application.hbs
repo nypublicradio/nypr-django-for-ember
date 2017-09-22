@@ -4,6 +4,11 @@
       <h1 class="site-title">nypr django for ember</h1>
       <span class="site-tag">Ember utilities for a legacy backend</span>
     {{/nav.corner}}
+    
+    {{#nav.links as |links|}}
+      {{links.link route='index' text='Home'}}
+      {{links.link route='internals' text='Internals'}}
+    {{/nav.links}}
   {{/chrome.nav}}
   
   {{#chrome.body}}
