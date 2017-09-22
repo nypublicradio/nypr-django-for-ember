@@ -1,5 +1,21 @@
-@import "nypr-ui/base";
-@import "nypr-ui/sitechrome";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+@import "nypr-ui/site-chrome";
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+img {
+  max-width: 100%;
+}
 
 code {
   padding: 0;
@@ -27,3 +43,43 @@ pre > code {
   }
 }
 
+.l-page {
+  max-width: 1000px;
+  margin: auto;
+  
+   > p {
+     line-height: 1.8;
+   }
+}
+
+.site-chrome__left-corner {
+  margin-bottom: 15px;
+  padding-right: 15px;
+}
+
+.site-chrome__nav {
+  text-align: right;
+  background: #f1f1f1;
+}
+
+.site-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.site-tag {
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.site-chrome__link > a {
+  color: #333;
+  &:focus,
+  &:hover {
+    color: #999;
+  }
+  
+  &.active {
+    color: #3480ce;
+  }
+}
