@@ -62,13 +62,12 @@ And finally, we'll use the `django-page` component to render out the fetched mod
 {{! BEGIN-SNIPPET about-page-button }}
 <button {{action 'getAboutPage'}}>Load /about</button>
 {{! END-SNIPPET }}
-{{! BEGIN-SNIPPET about-page-component }}
 {{#if about}}
+{{! BEGIN-SNIPPET about-page-component }}
   {{django-page page=about}}
-  
+{{! END-SNIPPET }}
   <hr />
   <p>
     Continue to {{link-to 'internals' 'internals'}}.
   </p>
 {{/if}}
-{{! END-SNIPPET }}

@@ -21,8 +21,28 @@ If the `isInDom` check fails, the adapter will make a network request using the 
 {{code-snippet name="django-page-request.js"}}
 
 {{md-text text="
-The first complication is that this adapter can return either a `Document` object or a blob of text as returned from a remote server. The serializer compensates for this
+The first complication is that this adapter can return either a `Document` object or a blob of text as returned from a remote server. The serializer and mdoel work together to compensates for this discrepency.
 
 ### `django-page` Serializer
-If the `django-page` serializer receives a valid `Document`, it will make a copy, 
+If the `django-page` serializer receives a valid `Document`, it will create a copy that has been cleaned out of rendered components and any assets that would re-load the ember app.
+"}}
+{{code-snippet name="serialize-inline-doc.js"}}
+
+{{md-text text="
+Otherwise, it will return the raw text it receives from the server. The full process is shown below in the `normalizeResponse` method of the `django-page` serializer. There some extra ceremony to scope the cloned `Document` to the `#ember-testing` node.
+"}}
+{{code-snippet name="django-page-serializer.js"}}
+
+{{md-text text="
+The next step in consuming a server response &mdash; whether it's straight-up text from a network response or a local `Document` &mdash; is in a series of computed properties defined on the model.
+
+### `django-page` Model
+The model provides a computed property named `document` (lowercase 'd'), which is a `Document` instance that other computed properties will parse for `<script>` and `<link>` tags and any embedded ember components found in the server response.
+  
+The serializer will provide either an `inlineDocument` attribute or a `text` attribute; the former is set as the `document` as is, and the `inlineDocument` is parsed using the native `DOMParser` object. It's a native replacement for the well-known jQuery function (`$()`) which takes a string and returns DOM nodes.
+"}}
+{{code-snippet name="django-page-document.js"}}
+
+{{md-text text="
+When the `django-page` model is passed to a `django-page` component, the component call's the model's `appendTo` method to add the parsed document's scripts, links, and nodes to the component's DOM.
 "}}

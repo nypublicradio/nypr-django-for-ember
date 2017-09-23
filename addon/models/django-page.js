@@ -14,6 +14,7 @@ export default DS.Model.extend({
   inlineDocument: DS.attr(),
   text: DS.attr(),
 
+  // BEGIN-SNIPPET django-page-document
   document: Ember.computed('inlineDocument', 'text', function(){
     let inlineDoc = this.get('inlineDocument');
     let text = this.get('text');
@@ -23,6 +24,7 @@ export default DS.Model.extend({
       return this.get('htmlParser').parse(text);
     }
   }),
+  // END-SNIPPET
 
   title: Ember.computed('document', function() {
     let titleTag = this.get('document').querySelector('title');
