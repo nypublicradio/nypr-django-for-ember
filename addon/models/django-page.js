@@ -98,12 +98,13 @@ export default DS.Model.extend({
     return this._separateScripts();
   }),
 
+  // BEGIN-SNIPPET separate-scripts
   _separateScripts() {
     let doc = this.get('document');
     let body = importNode(doc.querySelector('body'));
     let scripts = [];
 
-    // Then handle <script> in the <head>
+    // First handle <script> in the <head>
     Array.from(doc.querySelectorAll('head script')).forEach(script => {
       if (isJavascript(script)) {
         // Save for later evaluation
@@ -136,7 +137,7 @@ export default DS.Model.extend({
     });
 
     // Embedded Ember components require an ID for ember-wormwhole to use them as a
-    // destination.
+    // destination. They will be parsed out later when the `django-page` component renders them out.
     Array.from(body.querySelectorAll('[data-ember-component]')).forEach(function (el) {
       el.id = el.id || Ember.guidFor(el);
       el.setAttribute('data-text-content', el.textContent.trim());
@@ -153,7 +154,9 @@ export default DS.Model.extend({
 
     return { body, scripts, styles };
   },
+  // END-SNIPPET
 
+  // BEGIN-SNIPPET append-to
   appendTo($element) {
     let loader = this.get('scriptLoader');
     return this.appendStyles($element, this.get('pieces.styles')).finally(() => {
@@ -163,6 +166,7 @@ export default DS.Model.extend({
       loader.load(this.get('pieces.scripts'), $element[0]);
     });
   }
+  // END-SNIPPET
 });
 
 // <link> tags do not reliably produce load events, particularly if

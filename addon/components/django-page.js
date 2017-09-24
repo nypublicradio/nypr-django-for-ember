@@ -41,6 +41,7 @@ export default Ember.Component.extend(LegacySupportMixin, {
     }
   },
 
+  // BEGIN-SNIPPET component-did-render
   didRender() {
     let page = this.get('page');
     if (page !== this._lastPage) {
@@ -70,4 +71,5 @@ export default Ember.Component.extend(LegacySupportMixin, {
       });
     }
   },
+  // END-SNIPPET
 });
