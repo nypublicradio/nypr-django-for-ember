@@ -1,10 +1,12 @@
 # NYPR Publisher x Ember Utils
 
-This addon is a collection of Ember framework pieces and utilities that allows for server-rendered areas of NYPR web properties to be rendered inside an Ember app. The brunt of the work was completed in collaboration with @ef4, and further integrated by the NYPR Digital team.
+This addon is a collection of Ember framework pieces and utilities that allows for server-rendered areas of NYPR web properties to be rendered inside an Ember app. The brunt of the work was completed in collaboration with [@ef4](https://github.com/ef4). and further integrated by the NYPR Digital team.
 
 What follows is an overview of the major pieces of this project and how they work together. Much of this text was originally produced by @ef4 and edited by NYPR Digital over time.
 
 **Note**: when the term **app** or **upstream app** is used, it is referring to an Ember app within which this Ember Addon has been installed, e.g. the `wnyc-web-client` or another project that was generated using the `$ ember new` command.
+
+For interactive examples and instructions to use this in your own Ember app, please see the demo site: https://nypublicradio.github.io/nypr-django-for-ember/. Note these instructions are currently only valid for NYPR projects.
 
 ## The Hybrid Architecture
 
