@@ -1,0 +1,20 @@
+{{md-text text="
+### Advanced
+
+A `django-page` model does not *have* to come from a server response. It can be generated on the fly using any arbitrary markup. This can be a useful way to get around the fact that using triple curlies in a template (`{{{ }}}`) renders the content using the the `innerHTML` DOM property, which [intentionally does not execute JavaScript and is done as a safety measure](https://github.com/emberjs/ember.js/issues/9557).
+
+But there are valid use cases where arbitrary markup provided via an API may contain script tags that should be executed on the client. Here's a contrived example.
+
+Let's say you have some markup that looks like this. It could be an attribute on a model, or it could be extracted out of a larger server response.
+"}}
+{{code-snippet name="markup.js"}}
+
+{{md-text text="
+You can use the store to create a new `django-page` model and set that text to the model's text attribute:
+"}}
+{{code-snippet name="on-the-fly.js"}}
+
+<button class="btn" {{action 'makeDjangoPage'}}>Make a django-page on the fly</button>
+{{#if markup}}
+{{django-page page=markup}}
+{{/if}}
