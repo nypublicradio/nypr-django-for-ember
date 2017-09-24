@@ -1,7 +1,11 @@
 {{md-text text="
 # `nypr-django-for-ember`
 
-This addon provides a `django-page` component and model which apps can use to access legacy HTML output from our publisher back end. Most upstream apps will usually only make use of the model and component to achieve this. There is also a small set of modules the component and model use in order to properly consume raw HTML and integrate it with a running ember app which are briefly covered in [the README](https://github.com/nypublicradio/nypr-django-for-ember/blob/master/README.md).
+This addon provides a `django-page` component and model which apps can use to access legacy HTML output from our Publisher back end and additionally load any CSS and execute any JavaScript included in that HTML.
+
+This has allowed us to leverage legacy content and features within our new client-side apps without requiring a ground-up rewrite before new features could be shipped. At this point, the legacy features have been scoped to a few remaining areas, which an maintain for the time-being with reletively low friction.
+
+Most upstream apps will usually only need make use of the model and component to get legacy features up and running. There is also a small set of modules the component and model use in order to properly consume raw HTML and integrate it with a running Ember app which are briefly covered in [the README](https://github.com/nypublicradio/nypr-django-for-ember/blob/master/README.md), but are **not** required to understand in order to leverage this addon.
 
 ## Install
 Add this addon to your ember app:
@@ -10,22 +14,22 @@ $ yarn add nypublicradio/nypr-django-for-ember
 ```
 
 ## Setup
-Define these config values in your ember app
+Define these config values in your Ember app:
 
 **Required Config**
-- `webRoot`: The domain root of your publisher web backend instance, i.e. the demo or dev address, or the live production address.
+- `webRoot`: The domain root of your Publisher web backend instance, i.e. the demo or dev address, or the live production address.
   - default: `''`
-- `adminRoot`: The address to the admin backend
+- `adminRoot`: The domain of the Publisher admin interface.
   - default: `''`
-- `publisherAPI`: The full domain and path prefix for the publisher api. This is usually `webRoot + '/api'`.
+- `publisherAPI`: The full domain and path prefix for the Publisher API. This is usually `webRoot + '/api'`.
   - default: `''`
 
 **Optional Config**
 - `alienDom.toRemove`: A CSS selector chain of static, non-ember DOM nodes to remove before rendering a `django-page` component. Normally used to clean up DOM nodes initially returned by the server on a cold-boot. For more on the Alien DOM, see [the README](https://github.com/nypublicradio/nypr-django-for-ember/blob/master/README.md#alien-doms).
   - default: `body > :not(.ember-view):not(#fb-root), body > head > link[rel=stylesheet]:not([href*=assets])`
 
-## Loading a legacy page in an ember app
-To do this, you will set up a route to fetch a back end page based on its URI path. Let's say you want to load in the about page at `http://wnyc.demo2.wnyc.net/about`. 
+## Loading a legacy page in an Ember app
+To do this, you will set up a route to fetch a back end page based on its URI path. Let's say you want to load in the search page at `http://wnyc.demo2.wnyc.net/search`. 
 
 First make sure your config values are set.
 ```javascript
@@ -42,32 +46,38 @@ module.exports = function(environment) {
 };
 ```
 
-The actual store look up has been put in an action here for demonstration, but this kind of thing would normally go in the model hook of a route. Let's say you have an action like this:
+Then you can do a conventional store look up using Ember semantics. The name of the model is `'django-page'` and the id should be the pathname, so in this case it would be `'search'`, but it could be also be a multi-part pathname such as `'audio/help'`. The actual call to the store has been put in an action here for demonstration, but this kind of thing would normally go in the model hook of a route.
+
+Here's an action to look up the `'search'` page. Note it also includes a basic `isLoading` boolean which we use to display a loading indicator.
 "}}
 {{code-snippet name="find-page.js"}}
 {{md-text text="
 And for our purposes we'll have a button hooked up to the action like so:
 "}}
-{{code-snippet name="about-page-button.hbs"}}
+{{code-snippet name="search-page-button.hbs"}}
 {{md-text text="
 And finally, we'll use the `django-page` component to render out the fetched model, passing it in as the `page` param to the component.
 "}}
-{{code-snippet name="about-page-component.hbs"}}
-<p>
-  Click the button below to see the HTML document returned from the server rendered in an ember component, and then continue on to {{link-to 'internals' 'internals'}} for deeper dive into what's happening.
-</p>
+{{code-snippet name="search-page-component.hbs"}}
+
+{{md-text text="
+Click the button below to see the search page rendered in an Ember context, with its CSS and JavaScript preserved. You can use the box to perform a search of the WNYC website and the results will be rendered on the page. Legacy JS listners on the filters will continue to work as well.
+"}}
 <p>
   <strong>Note this page will scroll to the top when you click load.</strong> Scroll back down here to see the loaded page.
 </p>
-{{! BEGIN-SNIPPET about-page-button }}
-<button {{action 'getAboutPage'}}>Load /about</button>
-{{! END-SNIPPET }}
-{{#if about}}
-{{! BEGIN-SNIPPET about-page-component }}
-  {{django-page page=about}}
+<div class="load-button-wrapper">
+  {{! BEGIN-SNIPPET search-page-button }}
+  <button class="load-search" {{action 'getSearchPage'}}>Load /search</button>
+  {{! END-SNIPPET }}
+  {{if isLoading 'Loading...'}}
+</div>
+{{#if search}}
+{{! BEGIN-SNIPPET search-page-component }}
+  {{django-page page=search}}
 {{! END-SNIPPET }}
   <hr />
   <p>
-    Continue to {{link-to 'internals' 'internals'}}.
+    At this point, you can use the the model and component to fetch and render legacy pages in an Ember app, but for a deeper dive into how the Ember app communicates with a server that returns fully-baked HTML responses, continue on to {{link-to 'fetching' 'fetching'}} for more.
   </p>
 {{/if}}
