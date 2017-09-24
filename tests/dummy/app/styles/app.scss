@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 $site-chrome-nav-bg: #f1f1f1;
+$site-chrome-nav-bg-small: #f1f1f1;
 $site-chrome-link-color: #333;
 $site-chrome-link-hover: #999;
 $site-chrome-active-link-color: #3480ce; 
 $site-chrome-active-link-right-border: #3480ce;
 $site-chrome-active-link-bg: #ddd;
 $site-chrome-nav-width-large: 175px;
+@import "nypr-ui/vars";
 @import "nypr-ui/site-chrome";
 
 *,
@@ -32,6 +34,9 @@ code {
   font-size: 85%;
   background-color: rgba(27,31,35,0.05);
   border-radius: 3px;
+  @include mq((max-width: 600px)) {
+    word-break: break-all;
+  }
   
   &::before,
   &::after {
@@ -43,6 +48,7 @@ code {
 pre > code {
   display: block;
   padding:: 16px;
+  overflow: auto;
   
   &::before,
   &::after {
@@ -63,23 +69,40 @@ pre > code {
    }
 }
 
-.site-chrome__left-corner {
-  margin-bottom: 15px;
-  padding-right: 15px;
+.index-header {
+  font-size: 26px;
+  
+  @include mq((min-width: 450px)) {
+    font-size: 32px;
+  }
 }
 
-.site-chrome__nav {
-  text-align: right;
+@include mq((min-width: 1025px)) {
+  .site-chrome__left-corner {
+    margin-bottom: 15px;
+    padding-right: 15px;
+  }
+
+  .site-chrome__nav {
+    text-align: right;
+  }
 }
 
 .site-title {
   font-size: 16px;
   margin-bottom: 10px;
+  @include mq((max-width: 1024px)) {
+    display: inline;
+    margin-left: 15px;
+  }
 }
 
 .site-tag {
-  font-size: 12px;
+  font-size: 10px;
   margin-bottom: 20px;
+  @include mq((min-width: 1025px)) {
+    font-size: 12px;
+  }
 }
 
 .load-button-wrapper {
