@@ -1,0 +1,42 @@
+{{md-text text="
+## Fetching
+*Bringing HTML into an Ember app*
+
+### `django-page` Adapter
+So, when that `django-page` with the id of `search` is looked up from the store, what's actually happening?
+
+The adapter first checks to see if this Ember app is running with a DOM that was fully generated server-side. 
+
+When the adapter makes a request to the legacy back end, it includes the header `X-WNYC-EMBER`, which Publisher is configured to look for. When a request comes in **without** that header, Publisher knows it's likely a \"cold boot\" or the beginning of a session, so the server will include the Ember app assets as well as a special script tag. This tag allows Ember to know that when it boots, it has a local DOM available, which should be used for its first render.
+
+At the top of the `django-page` adapter, there's this block:
+"}}
+{{code-snippet name="django-page-top.js"}}
+
+{{md-text text="With `isInDom` defined like so:"}}
+{{code-snippet name="is-in-dom.js"}}
+
+{{md-text text="
+If the `isInDom` check fails, the adapter will make a network request using the given `id` as the path and the `webRoot` config value as the domain:
+"}}
+{{code-snippet name="django-page-request.js"}}
+
+{{md-text text="
+As you may infer from the above, the adapter can return either a `Document` object or a blob of text it receives from a remote server. Multiple return types is a complicating factor, and the serializer and model work together to compensate for this discrepency.
+
+### `django-page` Serializer
+If the `django-page` serializer receives a valid `Document`, it will create a copy that has been cleaned out of rendered components and any `<script>` or `<link>` tags that would re-load the Ember app.
+"}}
+{{code-snippet name="serialize-inline-doc.js"}}
+
+{{md-text text="
+Otherwise, it will return the raw text it receives from the server. The full process is shown below in the `normalizeResponse` method of the `django-page` serializer. Pleas note the extra ceremony to scope the cloned `Document` to the `#ember-testing` node.
+"}}
+{{code-snippet name="django-page-serializer.js"}}
+
+{{md-text text="
+The next step in consuming a server response &mdash; whether it's straight-up text from a network response or a local `Document` &mdash; is in a series of computed properties defined on the model.
+"}}
+<p>
+  Continue on to {{link-to 'read about the django-page model' 'model'}}.
+</p>

@@ -1,3 +1,22 @@
-<h2 id="title">Welcome to Ember</h2>
-
-{{outlet}}
+{{#site-chrome as |chrome|}}
+  {{#chrome.nav as |nav|}}
+    {{#nav.corner}}
+      <h1 class="site-title">nypr django for ember</h1>
+      <span class="site-tag">Ember utilities for a legacy backend</span>
+    {{/nav.corner}}
+    
+    {{#nav.links as |links|}}
+      {{links.link 'Home' 'index'}}
+      {{links.link 'Fetching' 'fetching'}}
+      {{links.link 'The Model' 'model'}}
+      {{links.link 'The Component' 'component'}}
+      {{links.link 'Advanced' 'advanced'}}
+    {{/nav.links}}
+  {{/chrome.nav}}
+  
+  {{#chrome.body}}
+    <div class="l-page">
+      {{outlet}}
+    </div>
+  {{/chrome.body}}
+{{/site-chrome}}

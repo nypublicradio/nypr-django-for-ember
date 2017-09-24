@@ -1,10 +1,11 @@
+{{!-- BEGIN-SNIPPET django-page-template --}}
 {{!-- Our component manually inserts server-generated DOM into this element --}}
 <div class="django-content"></div>
 
 {{#if showingOverlay}}
   {{yield}}
   {{#each page.embeddedEmberComponents as |ec|}}
-    {{#ember-wormhole to=ec.id replaceDestination=true}}
+    {{#ember-wormhole to=ec.id}}
       {{component
         ec.componentName
         classNames=ec.componentName
@@ -14,3 +15,4 @@
 {{else}}
   {{nypr-loading-templates type=loadingType}}
 {{/if}}
+{{!-- END-SNIPPET --}}

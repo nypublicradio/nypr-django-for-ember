@@ -1,0 +1,28 @@
+{{md-text text="
+### `django-page` Component
+
+The `django-page` component accepts a `page` parameter which should be an instance of a `django-page` model.
+
+The `django-page` component focuses on managing its DOM sub-tree, anchored on a single `<div>`, into which the model's content is rendered. When it is passed a `django-page` model, the component calls `appendTo` on the model, passing in that anchor `<div>` as an argument.
+
+Here's the component's template:
+"}}
+{{code-snippet name="django-page-template.hbs"}}
+
+{{md-text text="
+As you can see, the template includes a single node, plus two areas that are conditionally rendered. The part with the `{{yield}}` is controlled by the boolean `showingOverlay`, which is switched on after the model's `appendTo` resolves.
+
+Here's the component's `didRender` method:
+"}}
+{{code-snippet name="component-did-render.js"}}
+
+{{md-text text="
+Some basic caching aside, you can see that first the `.django-content` node is emptied, then any Alien DOM nodes are cleared, and finally `appendTo` is called (it's an async operation to compensate for `<link>` tag loading weirdness).
+
+When it resolves, you can see that the `showingOverlay` is switched to true, which renders the block containing the `{{yield}}`. By this point, the HTML retrieved from the original adapter fetch has been inserted into the component's `.django-content` node, and any `embeddedEmberComponents` will be wormholed to their destinations as setup during the `_separateScripts` method.
+
+The two additional logic blocks allow for legacy staff content to be shown (based on whether the current session was cookied from the admin server as a staff session), and also make use of the [`imagesLoaded` jQuery plugin](https://imagesloaded.desandro.com/).
+"}}
+<p>
+  This simple use case does not cover everything. Continue to {{link-to 'advanced' 'advanced'}} to see more sophisticated examples.
+</p>

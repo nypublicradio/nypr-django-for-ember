@@ -2,32 +2,28 @@ import DS from 'ember-data';
 import fetch from 'fetch';
 import config from 'ember-get-config';
 import { isInDom } from 'nypr-django-for-ember/utils/alien-dom';
-import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
 
 export default DS.Adapter.extend({
   findRecord(store, type, id /*, snapshot */) {
+    // BEGIN-SNIPPET django-page-top
     if (isInDom(id)) {
       return document;
     }
+    // END-SNIPPET
 
-    // django-page requests can be root-relative since we're always serving from our own domain
-    // except if the request is to the index route; in dev mode this will fail,
-    // since it always returns the index page. forcing the domain gets the html
-    // we want.
-    let url = '/';
-    if (id === '/') {
-      if (config.betaTrials.isBetaSite) {
-        url = config.wnycBetaURL;
-      } else {
-        url = config.webRoot;
-      }
-    } else if (config.environment === 'test') {
-      url = config.webRoot;
+    // BEGIN-SNIPPET django-page-request
+    let [path, query] = id.split('?');
+    
+    // publisher enforces trailing slashes
+    // turn "search" into "search/" and "/" into ""
+    path = path === '/' ? '' : path.replace(/\/*$/, '/');
+    if (query) {
+      path = `${path}?${query}`;
     }
-
-    return fetch(`${canonicalize(url)}${id === '/' ? '' : id}`, { headers: {'X-WNYC-EMBER':1}})
+    return fetch(`${config.webRoot}/${path}`, { headers: {'X-WNYC-EMBER':1}})
       .then(checkStatus)
       .then(response => response.text());
+    // END-SNIPPET
   },
   // starting in ember-data 2.0, this defaults to true
   // http://emberjs.com/blog/2015/06/18/ember-data-1-13-released.html#toc_new-adapter-hooks-for-better-caching

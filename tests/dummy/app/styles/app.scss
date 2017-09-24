@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+$site-chrome-nav-bg: #f1f1f1;
+$site-chrome-nav-bg-small: #f1f1f1;
+$site-chrome-link-color: #333;
+$site-chrome-link-hover: #999;
+$site-chrome-active-link-color: #3480ce; 
+$site-chrome-active-link-right-border: #3480ce;
+$site-chrome-active-link-bg: #ddd;
+$site-chrome-nav-width-large: 175px;
+@import "nypr-ui/vars";
+@import "nypr-ui/site-chrome";
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+img {
+  max-width: 100%;
+}
+
+code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+  @include mq((max-width: 600px)) {
+    word-break: break-all;
+  }
+  
+  &::before,
+  &::after {
+    letter-spacing: -0.2em;
+    content: "\00a0";
+  }
+}
+
+pre > code {
+  display: block;
+  padding:: 16px;
+  overflow: auto;
+  
+  &::before,
+  &::after {
+    display: none;
+  }
+}
+
+.l-page {
+  max-width: 1000px;
+  margin: auto;
+  
+   > p {
+     line-height: 1.8;
+   }
+   
+   > ul {
+     line-height: 1.8;
+   }
+}
+
+.index-header {
+  font-size: 26px;
+  
+  @include mq((min-width: 450px)) {
+    font-size: 32px;
+  }
+}
+
+@include mq((min-width: 1025px)) {
+  .site-chrome__left-corner {
+    margin-bottom: 15px;
+    padding-right: 15px;
+  }
+
+  .site-chrome__nav {
+    text-align: right;
+  }
+}
+
+.site-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  @include mq((max-width: 1024px)) {
+    display: inline;
+    margin-left: 15px;
+  }
+}
+
+.site-tag {
+  font-size: 10px;
+  margin-bottom: 20px;
+  @include mq((min-width: 1025px)) {
+    font-size: 12px;
+  }
+}
+
+.load-button-wrapper {
+  margin-bottom: 25px;
+}
+
+.btn {
+  appearance: none;
+  background: none;
+  border: 1px #222 solid;
+  padding: 15px 20px;
+  font-size: 14px;
+  font-weight: 100;
+  cursor: pointer;
+  margin-right: 15px;
+  
+  &:hover {
+    background-color: #eaeaea;
+  }
+}
+
+.django-content {
+  overflow: auto;
+}
+
+.django-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import getOwner from 'ember-owner/get';
 import { beforeAppend } from 'nypr-django-for-ember/utils/compat-hooks';
 import isJavascript from 'nypr-django-for-ember/utils/is-js';
 const { $ } = Ember;
@@ -13,6 +14,7 @@ export default DS.Model.extend({
   inlineDocument: DS.attr(),
   text: DS.attr(),
 
+  // BEGIN-SNIPPET django-page-document
   document: Ember.computed('inlineDocument', 'text', function(){
     let inlineDoc = this.get('inlineDocument');
     let text = this.get('text');
@@ -22,6 +24,7 @@ export default DS.Model.extend({
       return this.get('htmlParser').parse(text);
     }
   }),
+  // END-SNIPPET
 
   title: Ember.computed('document', function() {
     let titleTag = this.get('document').querySelector('title');
@@ -51,7 +54,13 @@ export default DS.Model.extend({
 
   embeddedEmberComponents: Ember.computed('pieces', function() {
     let doc = this.get('pieces.body');
+    let instance = getOwner(this);
     return Array.from(doc.querySelectorAll('[data-ember-component]')).map(el => {
+      let componentName = el.getAttribute('data-ember-component');
+      if (!instance.lookup(`component:${componentName}`)) {
+        console.warn(`${componentName} is not available in this app. Will not render embedded component ${componentName}.`); // eslint-disable-line
+        return false;
+      }
       let id = el.id;
       let args;
       try {
@@ -73,10 +82,10 @@ export default DS.Model.extend({
       }
       return {
         id,
-        componentName: el.getAttribute('data-ember-component'),
+        componentName,
         args
       };
-    });
+    }).filter(i => i !== false);
   }),
 
   appendStyles($element, styles) {
@@ -89,12 +98,13 @@ export default DS.Model.extend({
     return this._separateScripts();
   }),
 
+  // BEGIN-SNIPPET separate-scripts
   _separateScripts() {
     let doc = this.get('document');
     let body = importNode(doc.querySelector('body'));
     let scripts = [];
 
-    // Then handle <script> in the <head>
+    // First handle <script> in the <head>
     Array.from(doc.querySelectorAll('head script')).forEach(script => {
       if (isJavascript(script)) {
         // Save for later evaluation
@@ -127,7 +137,7 @@ export default DS.Model.extend({
     });
 
     // Embedded Ember components require an ID for ember-wormwhole to use them as a
-    // destination.
+    // destination. They will be parsed out later when the `django-page` component renders them out.
     Array.from(body.querySelectorAll('[data-ember-component]')).forEach(function (el) {
       el.id = el.id || Ember.guidFor(el);
       el.setAttribute('data-text-content', el.textContent.trim());
@@ -144,7 +154,9 @@ export default DS.Model.extend({
 
     return { body, scripts, styles };
   },
+  // END-SNIPPET
 
+  // BEGIN-SNIPPET append-to
   appendTo($element) {
     let loader = this.get('scriptLoader');
     return this.appendStyles($element, this.get('pieces.styles')).finally(() => {
@@ -154,6 +166,7 @@ export default DS.Model.extend({
       loader.load(this.get('pieces.scripts'), $element[0]);
     });
   }
+  // END-SNIPPET
 });
 
 // <link> tags do not reliably produce load events, particularly if

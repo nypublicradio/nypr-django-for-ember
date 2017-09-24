@@ -55,7 +55,6 @@ export const runOnce = Object.freeze({
   'js/vendor/handlebars/handlebars-2.0.0.min.js': true,
   'js/vendor/jwplayer/jwplayer.js': true,
   'js/vendor/modernizr/modernizr-2.6.2-xd_player_custom.js': true,
-  'www.google.com/jsapi': true,
   'maps.googleapis.com/maps/api/js': true,
   'www.google-analytics.com/analytics.js': true,
   'pixel.quantserve.com/aquant.js': true,

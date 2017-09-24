@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import service from 'ember-service/inject';
 import config from 'ember-get-config';
 import LegacySupportMixin from 'nypr-django-for-ember/mixins/legacy-support';
 import {
@@ -13,7 +12,6 @@ const { get, computed } = Ember;
 
 export default Ember.Component.extend(LegacySupportMixin, {
   layout,
-  router: service('wnyc-routing'),
   loadingType: computed('page', function() {
     let id = get(this, 'page.id') || '';
     let firstPart = id.split('/')[0];
@@ -43,6 +41,7 @@ export default Ember.Component.extend(LegacySupportMixin, {
     }
   },
 
+  // BEGIN-SNIPPET component-did-render
   didRender() {
     let page = this.get('page');
     if (page !== this._lastPage) {
@@ -72,8 +71,5 @@ export default Ember.Component.extend(LegacySupportMixin, {
       });
     }
   },
-
-  goToSearch(q) {
-    this.get('router').transitionTo('djangorendered', ['search/'], {q});
-  }
+  // END-SNIPPET
 });

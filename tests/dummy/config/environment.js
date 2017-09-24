@@ -21,7 +21,10 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    webRoot: 'https://wnyc.demo2.wnyc.net',
+    publisherAPI: 'https://api.demo.nypr.digital/api',
+    adminRoot: 'https://internal.demo2.wnyc.net'
   };
 
   if (environment === 'development') {

@@ -11,7 +11,7 @@ import config from 'ember-get-config';
 import { assign } from 'nypr-django-for-ember/utils/alien-dom';
 import { runOnce } from 'nypr-django-for-ember/services/legacy-loader';
 import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
-const { $, get } = Ember;
+const { $, get, A } = Ember;
 
 // This gets run by the django-page component right before tearing
 // down the content.
@@ -68,7 +68,7 @@ export function beforeAppend(element) {
 // pages is run through this before executing. You can return non-true
 // to cancel the entire script.
 export function mangleJavascript(scriptTag, sourceCode) {
-  if (Object.keys(runOnce).any(k => scriptTag.src.match(k))) {
+  if (A(Object.keys(runOnce)).any(k => scriptTag.src.match(k))) {
     return false;
   } else if (sourceCode === 'bad url') {
     return false;
