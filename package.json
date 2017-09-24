@@ -6,12 +6,13 @@
     "ember-addon"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Brian Whitton, Jeff Keen, Ed Faulkner",
+  "homepage": "https://nypublicradio.github.io/nypr-django-for-ember/",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/nypublicradio/nypr-django-for-ember",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
