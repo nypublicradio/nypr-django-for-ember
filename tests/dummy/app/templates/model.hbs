@@ -1,0 +1,28 @@
+{{md-text text="
+### `django-page` Model
+The model provides a computed property named `document` (lowercase 'd'), which is a `Document` instance that other computed properties will parse for `<script>` and `<link>` tags, any embedded Ember components, and regular old DOM nodes found in the server response.
+  
+The serializer will provide either an `inlineDocument` attribute or a `text` attribute; the former is set as the `document` as is, and the `inlineDocument` is parsed using the `DOMParser` object. It's a native replacement for the well-known jQuery function `$()` which takes a string and returns a DOM tree.
+"}}
+{{code-snippet name="django-page-document.js"}}
+
+{{md-text text="
+When the `django-page` model is passed to a `django-page` component, the component calls the model's `appendTo` method to add the parsed document's scripts, links, and nodes to the component's (and thus Ember's) DOM.
+
+Here's the `appendTo` method. It uses the `pieces` computed property to access and append `<link>` tags, `<script>` tags, and then the rest of the content DOM nodes to whatever element is passed in as a root. In most cases, this will be a node from the `django-page` component's template.
+"}}
+{{code-snippet name="append-to.js"}}
+
+{{md-text text="
+Setting up all the `pieces` is handled by the private `_separateScripts` method. The order of operations, displayed in full below, is as follows:
+- Call `importNode` on the `body` element of the computed `document` property. `importNode` allows the given node to be appended to the current run-time `Document`.
+- Pull the `<script>` tags out of the `document`'s `head`, and put any non-javascript tags into the imported `body` so they can be included in the rendered output
+- Pull any JavaScript tags out of the previously imported `body`, leaving a marker in the content, so the scripts can run at their original intended position.
+- Do basic parsing of any embedded Ember components. The server can include static markup with data attributes that direct Ember to render a conventional Ember component at that location in the DOM. On a first pass, make sure they have a unique ID, and attach any inner text as a data-attribute so the component can render it as part of its template.
+- Finally, pull out any `<link>` and `<style>` tags
+"}}
+{{code-snippet name="separate-scripts.js"}}
+
+<p>
+  Once all the pieces have been prepared, the model is ready for the component to render out. Continue reading about how the component and model interact in {{link-to 'the component' 'component'}}.
+</p>
