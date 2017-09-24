@@ -7,7 +7,9 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('internals');
+  this.route('fetching');
+  this.route('model');
+  this.route('component');
 });
 
 export default Router;
