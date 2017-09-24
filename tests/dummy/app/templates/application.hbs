@@ -6,8 +6,10 @@
     {{/nav.corner}}
     
     {{#nav.links as |links|}}
-      {{links.link route='index' text='Home'}}
-      {{links.link route='internals' text='Internals'}}
+      {{links.link 'Home' 'index'}}
+      {{links.link 'Fetching' 'fetching'}}
+      {{links.link 'The Model' 'model'}}
+      {{links.link 'The Component' 'component'}}
     {{/nav.links}}
   {{/chrome.nav}}
   
