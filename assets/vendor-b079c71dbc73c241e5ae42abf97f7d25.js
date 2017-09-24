@@ -5819,16 +5819,16 @@ if(Symbol.iterator in Object(t))return e(t,n)
 throw new TypeError("Invalid attempt to destructure non-iterable instance")}}()
 e.default=t.default.Adapter.extend({findRecord:function(e,t,s){if((0,i.isInDom)(s))return document
 var l=s.split("?"),c=a(l,2),u=c[0],d=c[1]
-return u="/"===u?"":u.replace(/\/*$/,"/"),d&&(u=u+"?"+d),(0,n.default)(r.default.webRoot+"/"+u,{headers:{"X-WNYC-EMBER":1}}).then(o).then(function(e){return e.text()})},shouldBackgroundReloadRecord:function(){return!1}})}),define("nypr-django-for-ember/components/django-page",["exports","ember-service/inject","ember-get-config","nypr-django-for-ember/mixins/legacy-support","nypr-django-for-ember/utils/alien-dom","nypr-django-for-ember/templates/components/django-page"],function(e,t,n,r,i,o){"use strict"
+return u="/"===u?"":u.replace(/\/*$/,"/"),d&&(u=u+"?"+d),(0,n.default)(r.default.webRoot+"/"+u,{headers:{"X-WNYC-EMBER":1}}).then(o).then(function(e){return e.text()})},shouldBackgroundReloadRecord:function(){return!1}})}),define("nypr-django-for-ember/components/django-page",["exports","ember-get-config","nypr-django-for-ember/mixins/legacy-support","nypr-django-for-ember/utils/alien-dom","nypr-django-for-ember/templates/components/django-page"],function(e,t,n,r,i){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0})
-var a=Ember.get,s=Ember.computed
-e.default=Ember.Component.extend(r.default,{layout:o.default,router:(0,t.default)("wnyc-routing"),loadingType:s("page",function(){switch((a(this,"page.id")||"").split("/")[0]){case"":return"index"
+var o=Ember.get,a=Ember.computed
+e.default=Ember.Component.extend(n.default,{layout:i.default,loadingType:a("page",function(){switch((o(this,"page.id")||"").split("/")[0]){case"":return"index"
 case"shows":case"articles":case"series":case"tags":case"blogs":return"channel"
 case"story":return"story"
-default:return"legacy"}}),didReceiveAttrs:function(){this.get("page")!==this._lastPage&&this.set("showingOverlay",!1)},didRender:function(){var e=this,t=this.get("page")
-if(t!==this._lastPage){this._lastPage=t
-var r=this.$(".django-content")
-r.empty(),(0,i.isInDom)(t.get("id"))&&(0,i.clearAlienDom)(),this.get("page").appendTo(r).then(function(){e.set("showingOverlay",!0),e.get("session.data.isStaff")&&e.revealStaffLinks(e.$(),n.default.adminRoot),e.$().imagesLoaded().progress(function(e,t){Ember.run(function(){t.img.classList.add("is-loaded")})})})}},goToSearch:function(e){this.get("router").transitionTo("djangorendered",["search/"],{q:e})}})})
+default:return"legacy"}}),didReceiveAttrs:function(){this.get("page")!==this._lastPage&&this.set("showingOverlay",!1)},didRender:function(){var e=this,n=this.get("page")
+if(n!==this._lastPage){this._lastPage=n
+var i=this.$(".django-content")
+i.empty(),(0,r.isInDom)(n.get("id"))&&(0,r.clearAlienDom)(),this.get("page").appendTo(i).then(function(){e.set("showingOverlay",!0),e.get("session.data.isStaff")&&e.revealStaffLinks(e.$(),t.default.adminRoot),e.$().imagesLoaded().progress(function(e,t){Ember.run(function(){t.img.classList.add("is-loaded")})})})}}})})
 define("nypr-django-for-ember/instance-initializers/link-handler",["exports","ember-get-config"],function(e,t){"use strict"
 function n(e,t){var n=t.lookup("service:metrics"),r=e.trackingCategory,i=e.trackingAction,o="",a=null
 if(e.trackingModel){a=t.lookup("service:store").peekRecord("story",e.trackingModel)}var s=e.trackingRegion,l=e.trackingLabel
@@ -5915,7 +5915,7 @@ Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Service.extend(
 t=Array.from(t),t.shift()
 var i=t[t.length-1].handler,o=[]
 return t.forEach(function(e){Object.keys(e.params).forEach(function(t){o.push(e.params[t])})}),{routeName:i,params:o,queryParams:r}}})}),define("nypr-django-for-ember/templates/components/django-page",["exports"],function(e){"use strict"
-e.__esModule=!0,e.default=Ember.HTMLBars.template({id:"8dpZyiaE",block:'{"statements":[[11,"div",[]],[15,"class","django-content"],[13],[14],[0,"\\n\\n"],[6,["if"],[[28,["showingOverlay"]]],null,{"statements":[[0,"  "],[18,"default"],[0,"\\n"],[6,["each"],[[28,["page","embeddedEmberComponents"]]],null,{"statements":[[6,["ember-wormhole"],null,[["to","replaceDestination"],[[28,["ec","id"]],true]],{"statements":[[0,"      "],[1,[33,["component"],[[28,["ec","componentName"]]],[["classNames","embeddedAttrs"],[[28,["ec","componentName"]],[28,["ec","args"]]]]],false],[0,"\\n"]],"locals":[]},null]],"locals":["ec"]},null]],"locals":[]},{"statements":[[0,"  "],[1,[33,["nypr-loading-templates"],null,[["type"],[[28,["loadingType"]]]]],false],[0,"\\n"]],"locals":[]}]],"locals":[],"named":[],"yields":["default"],"hasPartials":false}',meta:{moduleName:"nypr-django-for-ember/templates/components/django-page.hbs"}})}),define("nypr-django-for-ember/utils/alien-dom",["exports","ember-get-config"],function(e,t){"use strict"
+e.__esModule=!0,e.default=Ember.HTMLBars.template({id:"wfm4QZG0",block:'{"statements":[[11,"div",[]],[15,"class","django-content"],[13],[14],[0,"\\n\\n"],[6,["if"],[[28,["showingOverlay"]]],null,{"statements":[[0,"  "],[18,"default"],[0,"\\n"],[6,["each"],[[28,["page","embeddedEmberComponents"]]],null,{"statements":[[6,["ember-wormhole"],null,[["to"],[[28,["ec","id"]]]],{"statements":[[0,"      "],[1,[33,["component"],[[28,["ec","componentName"]]],[["classNames","embeddedAttrs"],[[28,["ec","componentName"]],[28,["ec","args"]]]]],false],[0,"\\n"]],"locals":[]},null]],"locals":["ec"]},null]],"locals":[]},{"statements":[[0,"  "],[1,[33,["nypr-loading-templates"],null,[["type"],[[28,["loadingType"]]]]],false],[0,"\\n"]],"locals":[]}]],"locals":[],"named":[],"yields":["default"],"hasPartials":false}',meta:{moduleName:"nypr-django-for-ember/templates/components/django-page.hbs"}})}),define("nypr-django-for-ember/utils/alien-dom",["exports","ember-get-config"],function(e,t){"use strict"
 function n(e){var t=document.querySelector('[type="text/x-wnyc-marker"]')
 return t&&e===t.getAttribute("data-url")}function r(){var e=t.default.alienDom.toRemove
 if(!e){var n="test"===t.default.environment?"#ember-testing":"body"
@@ -6011,7 +6011,9 @@ Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.exten
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.extend({layout:t.default,tagName:"nav",classNames:["site-chrome__nav"]})}),define("nypr-ui/components/site-chrome/nav/corner",["exports","nypr-ui/templates/components/site-chrome/nav/corner"],function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.extend({layout:t.default,classNames:["site-chrome__left-corner"]})}),define("nypr-ui/components/site-chrome/nav/footer",["exports","nypr-ui/templates/components/site-chrome/nav/footer"],function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.extend({layout:t.default,classNames:["site-chrome__nav__footer"]})}),define("nypr-ui/components/site-chrome/nav/link",["exports","nypr-ui/templates/components/site-chrome/nav/link"],function(e,t){"use strict"
-Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.extend({layout:t.default,tagName:""})}),define("nypr-ui/components/site-chrome/nav/links",["exports","nypr-ui/templates/components/site-chrome/nav/links"],function(e,t){"use strict"
+Object.defineProperty(e,"__esModule",{value:!0})
+var n=Ember.Component.extend({layout:t.default,tagName:""})
+n.reopenClass({positionalParams:["text","route"]}),e.default=n}),define("nypr-ui/components/site-chrome/nav/links",["exports","nypr-ui/templates/components/site-chrome/nav/links"],function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.extend({layout:t.default,classNames:["site-chrome__links"]})}),define("nypr-ui/components/site-chrome/top",["exports","nypr-ui/templates/components/site-chrome/top"],function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.extend({layout:t.default,classNames:["site-chrome__top"]})}),define("nypr-ui/components/site-chrome/top/body",["exports","nypr-ui/templates/components/site-chrome/top/body"],function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Component.extend({layout:t.default,classNames:["site-chrome__top__body"]})}),define("nypr-ui/components/site-chrome/top/button",["exports","nypr-ui/templates/components/site-chrome/top/button"],function(e,t){"use strict"
