@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+$site-chrome-nav-bg: #f1f1f1;
+$site-chrome-link-color: #333;
+$site-chrome-link-hover: #999;
+$site-chrome-active-link-color: #3480ce; 
+$site-chrome-active-link-right-border: #3480ce;
+$site-chrome-active-link-bg: #ddd;
+$site-chrome-nav-width-large: 175px;
 @import "nypr-ui/site-chrome";
 
 *,
@@ -59,7 +66,6 @@ pre > code {
 
 .site-chrome__nav {
   text-align: right;
-  background: #f1f1f1;
 }
 
 .site-title {
@@ -72,14 +78,6 @@ pre > code {
   margin-bottom: 20px;
 }
 
-.site-chrome__link > a {
-  color: #333;
-  &:focus,
-  &:hover {
-    color: #999;
-  }
   
-  &.active {
-    color: #3480ce;
   }
 }
