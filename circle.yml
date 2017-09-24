@@ -23,7 +23,7 @@ test:
 
 deployment:
   docs:
-    branch: docs
+    branch: master
     commands:
-      - git checkout gh-pages; git checkout docs
+      - git checkout gh-pages; git checkout master
       - ./node_modules/ember-cli/bin/ember deploy production
