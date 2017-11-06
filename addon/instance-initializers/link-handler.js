@@ -52,10 +52,14 @@ export function normalizeHref(node, base = location) {
   let href = node.getAttribute('href') || '';
   let url = new URL(href, base).toString();
   let isExternal = false;
-  if (href.startsWith('#') || href.startsWith('mailto:')) {
+  let protocolFreeWebRoot = config.webRoot.replace(/^https?:/i, '');
+  let protocolFreeUrl = url.replace(/^https?:/i, '');
+
+  // '?' below covers schedule page <a href="?scheduleStation=wnyc-fm939">
+  if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('?')) {
     return {url, href, isExternal};
-  } else if (url.startsWith(config.webRoot)) {
-    href = url.replace(config.webRoot, '').replace(/^\//, '') || '/';
+  } else if (protocolFreeUrl.startsWith(protocolFreeWebRoot)) {
+    href = protocolFreeUrl.replace(protocolFreeWebRoot, '').replace(/^\//, '') || '/';
   } else if (!href.startsWith('/')) {
     href = '';
     isExternal = true;
