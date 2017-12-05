@@ -49,11 +49,12 @@ function _trackLegacyEvent(event, instance) {
 }
 
 export function normalizeHref(node, base = location) {
+  const regex = /^https?:/i;
   let href = node.getAttribute('href') || '';
   let url = new URL(href, base).toString();
   let isExternal = false;
-  let protocolFreeWebRoot = config.webRoot.replace(/^https?:/i, '');
-  let protocolFreeUrl = url.replace(/^https?:/i, '');
+  let protocolFreeWebRoot = config.webRoot.replace(regex, '');
+  let protocolFreeUrl = url.replace(regex, '');
 
   // '?' below covers schedule page <a href="?scheduleStation=wnyc-fm939">
   if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('?')) {
