@@ -56,8 +56,7 @@ export function normalizeHref(node, base = location) {
   let protocolFreeWebRoot = config.webRoot.replace(regex, '');
   let protocolFreeUrl = url.replace(regex, '');
 
-  // '?' below covers schedule page <a href="?scheduleStation=wnyc-fm939">
-  if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('?')) {
+  if (href.startsWith('#') || href.startsWith('mailto:') ) {
     return {url, href, isExternal};
   } else if (protocolFreeUrl.startsWith(protocolFreeWebRoot)) {
     href = protocolFreeUrl.replace(protocolFreeWebRoot, '').replace(/^\//, '') || '/';
