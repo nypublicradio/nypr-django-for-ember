@@ -49,13 +49,17 @@ function _trackLegacyEvent(event, instance) {
 }
 
 export function normalizeHref(node, base = location) {
+  const regex = /^https?:/i;
   let href = node.getAttribute('href') || '';
   let url = new URL(href, base).toString();
   let isExternal = false;
-  if (href.startsWith('#') || href.startsWith('mailto:')) {
+  let protocolFreeWebRoot = config.webRoot.replace(regex, '');
+  let protocolFreeUrl = url.replace(regex, '');
+
+  if (href.startsWith('#') || href.startsWith('mailto:') ) {
     return {url, href, isExternal};
-  } else if (url.startsWith(config.webRoot)) {
-    href = url.replace(config.webRoot, '').replace(/^\//, '') || '/';
+  } else if (protocolFreeUrl.startsWith(protocolFreeWebRoot)) {
+    href = protocolFreeUrl.replace(protocolFreeWebRoot, '').replace(/^\//, '') || '/';
   } else if (!href.startsWith('/')) {
     href = '';
     isExternal = true;
