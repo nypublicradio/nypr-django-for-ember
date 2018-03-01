@@ -1,4 +1,4 @@
-import Controller from 'ember-controller';
+import Controller from '@ember/controller';
 
 // BEGIN-SNIPPET markup
 const TEXT = `

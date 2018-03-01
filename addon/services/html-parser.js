@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Service from '@ember/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   parse(string) {
     return this.get('_parser')(string);
   },
 
-  _parser: Ember.computed(function() {
+  _parser: computed(function() {
     // Browsers back through IE9 support DOMParser, although not
     // necessarily with html support.
     let parser = new DOMParser();

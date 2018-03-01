@@ -1,21 +1,24 @@
+import { guidFor } from '@ember/object/internals';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { Promise, allSettled } from 'rsvp';
+import $ from 'jquery';
 import Ember from 'ember';
 import DS from 'ember-data';
-import getOwner from 'ember-owner/get';
+import { getOwner } from '@ember/application';
 import { beforeAppend } from 'nypr-django-for-ember/utils/compat-hooks';
 import isJavascript from 'nypr-django-for-ember/utils/is-js';
-const { $ } = Ember;
-const { allSettled, Promise } = Ember.RSVP;
 
 let scriptCounter = 0;
 
 export default DS.Model.extend({
-  htmlParser: Ember.inject.service(),
-  scriptLoader: Ember.inject.service(),
+  htmlParser: service(),
+  scriptLoader: service(),
   inlineDocument: DS.attr(),
   text: DS.attr(),
 
   // BEGIN-SNIPPET django-page-document
-  document: Ember.computed('inlineDocument', 'text', function(){
+  document: computed('inlineDocument', 'text', function(){
     let inlineDoc = this.get('inlineDocument');
     let text = this.get('text');
     if (inlineDoc) {
@@ -26,14 +29,14 @@ export default DS.Model.extend({
   }),
   // END-SNIPPET
 
-  title: Ember.computed('document', function() {
+  title: computed('document', function() {
     let titleTag = this.get('document').querySelector('title');
     if (titleTag) {
       return titleTag.textContent;
     }
   }),
 
-  wnycChannel: Ember.computed('document', function() {
+  wnycChannel: computed('document', function() {
     let channel = this.get('document').querySelector('#wnyc-channel-jsonapi');
     let channelSerializer = this.store.serializerFor('channel');
     let channelModel = this.store.modelFor('channel');
@@ -52,7 +55,7 @@ export default DS.Model.extend({
     }
   }),
 
-  embeddedEmberComponents: Ember.computed('pieces', function() {
+  embeddedEmberComponents: computed('pieces', function() {
     let doc = this.get('pieces.body');
     let instance = getOwner(this);
     return Array.from(doc.querySelectorAll('[data-ember-component]')).map(el => {
@@ -94,7 +97,7 @@ export default DS.Model.extend({
     return allSettled(stylesLoaded);
   },
 
-  pieces: Ember.computed('document', function() {
+  pieces: computed('document', function() {
     return this._separateScripts();
   }),
 
@@ -139,7 +142,7 @@ export default DS.Model.extend({
     // Embedded Ember components require an ID for ember-wormwhole to use them as a
     // destination. They will be parsed out later when the `django-page` component renders them out.
     Array.from(body.querySelectorAll('[data-ember-component]')).forEach(function (el) {
-      el.id = el.id || Ember.guidFor(el);
+      el.id = el.id || guidFor(el);
       el.setAttribute('data-text-content', el.textContent.trim());
       el.textContent = '';
     });

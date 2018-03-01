@@ -8,10 +8,10 @@
 
    TODO: remove this after Ember 2.15 ships, which includes a public router
 */
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
 
-export default Ember.Service.extend({
-  _routing: Ember.inject.service('-routing'),
+export default Service.extend({
+  _routing: service('-routing'),
   transitionTo(routeName, models, queryParams) {
     this.get('_routing').transitionTo(routeName, models, queryParams);
   },

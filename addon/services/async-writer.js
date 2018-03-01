@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
+import $ from 'jquery';
 import isJavascript from 'nypr-django-for-ember/utils/is-js';
-const { $ } = Ember;
 
-export default Ember.Service.extend({
-  htmlParser: Ember.inject.service(),
-  scriptLoader: Ember.inject.service(),
+export default Service.extend({
+  htmlParser: service(),
+  scriptLoader: service(),
 
   init() {
     this._super();

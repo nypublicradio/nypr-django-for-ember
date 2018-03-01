@@ -6,12 +6,14 @@
   The goal is that this set can keep shrinking as features are ported
   out of the old JS.
 */
-import Ember from 'ember';
+import $ from 'jquery';
+
+import { get } from '@ember/object';
+import { A } from '@ember/array';
 import config from 'ember-get-config';
 import { assign } from 'nypr-django-for-ember/utils/alien-dom';
 import { runOnce } from 'nypr-django-for-ember/services/legacy-loader';
 import { canonicalize } from 'nypr-django-for-ember/services/script-loader';
-const { $, get, A } = Ember;
 
 // This gets run by the django-page component right before tearing
 // down the content.

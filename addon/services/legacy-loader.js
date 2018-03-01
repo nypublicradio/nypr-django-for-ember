@@ -7,6 +7,8 @@
 // delivered in the wrong order, and only works when it's all
 // evaluated before domready.
 // -------
+import Service, { inject as service } from '@ember/service';
+
 export const dependencies = Object.freeze({
   'js/lib/wnyc/user.js': [
     'js/lib/jquery/jquery.xdr.js',
@@ -63,11 +65,10 @@ export const runOnce = Object.freeze({
   'hotjar.com': true,
 });
 
-import Ember from 'ember';
 import ENV from 'ember-get-config';
 
-export default Ember.Service.extend({
-  router: Ember.inject.service('wnyc-routing'),
+export default Service.extend({
+  router: service('wnyc-routing'),
   init() {
     this._super();
     this.modules = window.WNYC_MODULES || Object.create(null);

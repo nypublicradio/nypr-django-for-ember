@@ -6,14 +6,16 @@
    external and inline scripts.
 */
 
+import Service, { inject as service } from '@ember/service';
+
+import { Promise } from 'rsvp';
+
 import fetch from 'fetch';
-import Ember from 'ember';
 import { mangleJavascript } from 'nypr-django-for-ember/utils/compat-hooks';
-const { Promise } = Ember.RSVP;
 import config from 'ember-get-config';
 
-export default Ember.Service.extend({
-  asyncWriter: Ember.inject.service(),
+export default Service.extend({
+  asyncWriter: service(),
 
   init() {
     this.stack = [];
