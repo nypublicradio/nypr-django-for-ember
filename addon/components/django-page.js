@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import Component from '@ember/component';
+import { computed, get } from '@ember/object';
 import config from 'ember-get-config';
 import LegacySupportMixin from 'nypr-django-for-ember/mixins/legacy-support';
 import {
@@ -8,9 +10,7 @@ import {
 
 import layout from '../templates/components/django-page';
 
-const { get, computed } = Ember;
-
-export default Ember.Component.extend(LegacySupportMixin, {
+export default Component.extend(LegacySupportMixin, {
   layout,
   loadingType: computed('page', function() {
     let id = get(this, 'page.id') || '';
@@ -63,7 +63,7 @@ export default Ember.Component.extend(LegacySupportMixin, {
           this.revealStaffLinks(this.$(), config.adminRoot);
         }
         this.$().imagesLoaded().progress((i, image) => {
-          Ember.run(() => {
+          run(() => {
             image.img.classList.add('is-loaded');
           });
         });

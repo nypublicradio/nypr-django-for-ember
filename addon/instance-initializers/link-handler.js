@@ -1,7 +1,8 @@
 // based on https://github.com/intercom/ember-href-to/blob/master/app/instance-initializers/browser/ember-href-to.js
+import $ from 'jquery';
+
 import config from 'ember-get-config';
 import Ember from 'ember';
-const { $ } = Ember;
 
 function _trackEvent(data, instance) {
   let metrics = instance.lookup('service:metrics');

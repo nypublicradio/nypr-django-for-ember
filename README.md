@@ -14,7 +14,7 @@ The key to understanding this new architecture is to think of an NYPR web proper
 
 The frontend application, written in Ember, manages all navigation and rendering. It communicates with the backend application ([the publisher app](https://github.com/nypublicradio/publisher)) when it needs to fetch or store information. By minimizing the coupling between the two applications, we make it easier to develop and test each one, sticking to the strengths of each respective framework's conventions.
 
-The architecture is "hybrid" because the data passed from backend to frontend is not strictly semantic. It is often pre-rendered into HTML, CSS, and even Javascript. 
+The architecture is "hybrid" because the data passed from backend to frontend is not strictly semantic. It is often pre-rendered into HTML, CSS, and even Javascript.
 
 ## Ember Application Tour
 
@@ -55,7 +55,7 @@ Second it can gracefully embed dynamic Ember content *inside* the server-rendere
 The above means "render the given Django page, then if comments are enabled, render the `story-comments` component inside the element with `id="comments"`". This is the key technique for gradually enhancing existing pages with new dynamic capability.
 
 ### Intercepting Clicks
-Capturing user clicks is critical to enable persistent navigation on the client. To that end, this addon includes a `link-handler` initializer which listens for clicks on the body and converts them into Ember transitions. This conversion only happens on appropriate links, i.e. does not match for a `data-ember-action` attribute, does not have an `ember-view` class, etc. 
+Capturing user clicks is critical to enable persistent navigation on the client. To that end, this addon includes a `link-handler` initializer which listens for clicks on the body and converts them into Ember transitions. This conversion only happens on appropriate links, i.e. does not match for a `data-ember-action` attribute, does not have an `ember-view` class, etc.
 
 ### Script Loader Service
 The `script-loader` service solves one particular problem: during the initial rendering of a web page, `<script>` tags execute synchronously in order of appearance. But at any later point, newly created `<script>` tags run in unpredictable order. Much of the legacy Javascript assumes strict ordering. So the script loader manually retrieves and executes scripts in exactly the same order they would have run during initial page load.
@@ -80,25 +80,32 @@ Navigating to our sites from an external domain (or e.g. entering www.wnyc.org i
 * When the `django-page` component is about to render itself using the nodes provided by a given `django-page` data model, it uses `clearAlienDom` to make sure there aren't any server-generated nodes remaining
 
 
-## Installation
+Installation
+------------------------------------------------------------------------------
 
 * `git clone <repository-url>` this repository
 * `cd nypr-django-for-ember`
 * `npm install`
 
-## Running
+### Linting
+
+* `npm run lint:js`
+* `npm run lint:js -- --fix`
+
+### Running tests
+
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `npm test` – Runs `ember try:each` to test your addon against multiple Ember versions
+
+### Running the dummy application
 
 * `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-## Running Tests
-
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
