@@ -1,4 +1,6 @@
 # nypr-django-for-ember Changelog
+## 0.1.0
+- [CHORE] Upgrade to Ember 3.0
 
 ## 0.0.4
 - [BUGFIX] #4 Prevent link-handler exceptions when metrics services don't exist
