@@ -121,7 +121,8 @@ function listener(router, instance, event) {
     router.transitionTo(routeName, params, queryParams);
     preventDefault.bind(event)();
     return false;
-  } else if (isExternal && !Ember.testing) {
+  } else if (isExternal && !Ember.testing && !href.startsWith('mailto:')) {
+                                             //^^^ don't add _blank to mailto links
     target.setAttribute('target', '_blank');
   }
   return true;
