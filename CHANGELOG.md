@@ -1,4 +1,8 @@
 # nypr-django-for-ember Changelog
+
+## 0.1.1
+- [CHORE] loosen in house deps
+
 ## 0.1.0
 - [CHORE] Upgrade to Ember 3.0
 
