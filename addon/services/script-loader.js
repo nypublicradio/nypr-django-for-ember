@@ -18,6 +18,7 @@ export default Service.extend({
   asyncWriter: service(),
 
   init() {
+    this._super(...arguments);
     this.stack = [];
   },
 
