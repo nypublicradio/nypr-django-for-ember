@@ -86,6 +86,7 @@ Installation
 * `git clone <repository-url>` this repository
 * `cd nypr-django-for-ember`
 * `npm install`
+* `bower install`
 
 ### Linting
 
