@@ -1,8 +1,7 @@
 // based on https://github.com/intercom/ember-href-to/blob/master/app/instance-initializers/browser/ember-href-to.js
-import $ from 'jquery';
-
 import config from 'ember-get-config';
 import Ember from 'ember';
+// import { getOwner } from '@ember/application';
 
 function _trackEvent(data, instance) {
   let metrics = instance.lookup('service:metrics');
@@ -94,45 +93,44 @@ export function shouldHandleLink(node, base = location) {
   return true;
 }
 
+function listener(router, instance, event) {
+  let { target, preventDefault } = event;
+  let { url, href, isExternal } = normalizeHref(target);
+  let validLink = shouldHandleLink(target);
+
+  // track the click
+  if (target.getAttribute('data-tracking-category') && target.getAttribute('data-tracking-action')) {
+    _trackEvent(target.dataset, instance);
+  }
+
+  if (validLink) {
+
+    if (target.closest('.django-content')) {
+      _trackLegacyEvent(event, instance);
+    }
+
+    if (url === location.toString()) {
+      // could be a valid link, but we still want to short circuit if we'll
+      // route to the current page
+      return false;
+    }
+
+    let { routeName, params, queryParams } = router.recognize(href);
+    router.transitionTo(routeName, params, queryParams);
+    preventDefault.bind(event)();
+    return false;
+  } else if (isExternal && !Ember.testing) {
+    target.setAttribute('target', '_blank');
+  }
+  return true;
+}
+
 export default {
   name: 'link-handler',
   initialize: function(instance) {
     let router = instance.lookup('service:wnyc-routing');
-    let $body = $(document.body);
 
-    $body.off('click.href-to', 'a');
-    // TODO: abstract from django component
-    $body.on('click.href-to', 'a', function(event) {
-      let { currentTarget, preventDefault } = event;
-      let { url, href, isExternal } = normalizeHref(currentTarget);
-      let validLink = shouldHandleLink(currentTarget);
-      let $target = $(currentTarget);
-
-      // track the click
-      if ($target.data('trackingCategory') && $target.data('trackingAction')) {
-        _trackEvent($target.data(), instance);
-      }
-
-      if (validLink) {
-
-        if ($target.closest('.django-content').length > 0 ) {
-          _trackLegacyEvent(event, instance);
-        }
-
-        if (url === location.toString()) {
-          // could be a valid link, but we still want to short circuit if we'll
-          // route to the current page
-          return false;
-        }
-
-        let { routeName, params, queryParams } = router.recognize(href);
-        router.transitionTo(routeName, params, queryParams);
-        preventDefault.bind(event)();
-        return false;
-      } else if (isExternal && !Ember.testing) {
-        $target.attr('target', '_blank');
-      }
-      return true;
-    });
+    document.removeEventListener('click', listener);
+    document.addEventListener('click', listener.bind(null, router, instance));
   }
 };

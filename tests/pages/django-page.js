@@ -1,16 +1,8 @@
-import PageObject from 'wnyc-web-client/tests/page-object';
+import { create, visitable } from 'ember-cli-page-object';
 import { appendHTML } from 'wnyc-web-client/tests/helpers/html';
 import { alienDomClick } from 'nypr-django-for-ember/utils/alien-dom';
 
-let {
-  visitable,
-  //clickOnText,
-  //clickable,
-  //textList,
-  //text
-} = PageObject;
-
-export default PageObject.create({
+export default create({
   visit: visitable(':id'),
   alienClick(selector) {
     return alienDomClick(selector);

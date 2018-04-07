@@ -11,30 +11,19 @@
 import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
-  _routing: service('-routing'),
+  router: service(),
   transitionTo(routeName, models, queryParams) {
-    this.get('_routing').transitionTo(routeName, models, queryParams);
+    this.get('router').transitionTo(routeName, ...models, queryParams);
   },
 
   recognize(url) {
-    let handlers = this.get('_routing').router.router.recognizer.recognize(url);
+    let handlers = this.get('router')._router._routerMicrolib.recognizer.recognize(url);
     // recognize returns queryParams as a property on the handlers array
     // seems strange, maybe it's a bug? problems with a private API
     let { queryParams } = handlers;
-    // now make it an array
-    handlers = Array.from(handlers);
-    handlers.shift(); // application handler is always present and not interesting here
-    //let routeName = handlers.map(h => h.handler).join('.');
-    let routeName = handlers[handlers.length -1].handler;
-    let params = [];
-    handlers.forEach(h => {
-      // Originally the parameters were stripped down to just one param.
-      // Added all params for the schedule-date route and it appears to not break anything
-      Object.keys(h.params).forEach(function(keyName) {
-        params.push(h.params[keyName]);
-      });
-    });
-    return { routeName, params, queryParams };
+    let handler = handlers[handlers.length - 1];
+    let params = Object.keys(handler.params).map(key => handler.params[key]);
+    return { routeName: handler.handler, params, queryParams: { queryParams } };
   }
 
 });
