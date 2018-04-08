@@ -129,8 +129,9 @@ export default {
   name: 'link-handler',
   initialize: function(instance) {
     let router = instance.lookup('service:wnyc-routing');
+    let boundListener = listener.bind(null, router, instance);
+    let root = document.querySelector(instance.rootElement);
 
-    document.removeEventListener('click', listener);
-    document.addEventListener('click', listener.bind(null, router, instance));
+    root.addEventListener('click', boundListener);
   }
 };
