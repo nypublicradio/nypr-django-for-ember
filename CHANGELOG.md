@@ -1,5 +1,9 @@
 # nypr-django-for-ember Changelog
 
+## 0.2.0
+- [ENHANCEMENT] use native routing service
+- [BUGFIX] clean up link handler and bind it rootElement for better testing memory footprint
+
 ## 0.1.1
 - [CHORE] loosen in house deps
 
