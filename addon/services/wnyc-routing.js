@@ -18,12 +18,16 @@ export default Service.extend({
 
   recognize(url) {
     let handlers = this.get('router')._router._routerMicrolib.recognizer.recognize(url);
-    // recognize returns queryParams as a property on the handlers array
-    // seems strange, maybe it's a bug? problems with a private API
     let { queryParams } = handlers;
-    let handler = handlers[handlers.length - 1];
-    let params = Object.keys(handler.params).map(key => handler.params[key]);
-    return { routeName: handler.handler, params, queryParams: { queryParams } };
+    let routeName = handlers[handlers.length - 1].handler;
+
+    handlers = Array.from(handlers);
+    handlers.shift()
+    // create an array of all the params found in the url for each route
+    let params =  handlers.map(({params}) => Object.values(params))
+                    .reduce((params, vals) => params.concat(vals), []);
+
+    return { routeName, params, queryParams: { queryParams } };
   }
 
 });
