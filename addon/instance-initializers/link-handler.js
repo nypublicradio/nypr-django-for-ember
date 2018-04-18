@@ -66,7 +66,9 @@ export function normalizeHref(node, base = location) {
     return {url, href, isExternal};
   } else if (protocolFreeUrl.startsWith(protocolFreeWebRoot)) {
     href = protocolFreeUrl.replace(protocolFreeWebRoot, '').replace(/^\//, '') || '/';
-  } else if (!href.startsWith('/')) {
+  } else if (!href.startsWith('/') || href.startsWith('//')) {
+                                      // ^^^^ we shouldn't get here if href = current domain
+                                      // and if it doesn't we want to open in a new tab
     href = '';
     isExternal = true;
   }
@@ -129,7 +131,8 @@ export default {
         router.transitionTo(routeName, params, queryParams);
         preventDefault.bind(event)();
         return false;
-      } else if (isExternal && !Ember.testing) {
+      } else if (isExternal && !Ember.testing && !href.startsWith('mailto:')) {
+                                                 //^^^ don't add _blank to mailto links
         $target.attr('target', '_blank');
       }
       return true;
