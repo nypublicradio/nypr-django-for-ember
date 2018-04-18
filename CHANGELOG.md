@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.2.2
+- [BUGFIX] better handling for protocol-free URLs + mailto links
+
 ## 0.2.1
 - [BUGFIX] fix how route params are gathered up to look at all handlers
 
