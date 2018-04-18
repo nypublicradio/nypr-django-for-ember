@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.1.2
+- [BUGFIX] backport minor link handling fixes
+
 ## 0.1.1
 - [CHORE] loosen in house deps
 
