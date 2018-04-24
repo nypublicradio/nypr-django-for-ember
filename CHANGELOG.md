@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.2.3
+- [BUGFIX] fix how link clicks are detected
+
 ## 0.2.2
 - [BUGFIX] better handling for protocol-free URLs + mailto links
 
