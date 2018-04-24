@@ -53,6 +53,15 @@ function _trackLegacyEvent(event, instance) {
   }
 }
 
+function findParent(target, selector) {
+  while(target.parentNode) {
+    if (target.matches(selector)) {
+      return target;
+    }
+    target = target.parentNode;
+  }
+}
+
 export function normalizeHref(node, base = location) {
   const regex = /^https?:/i;
   let href = node.getAttribute('href') || '';
@@ -96,9 +105,15 @@ export function shouldHandleLink(node, base = location) {
 }
 
 function listener(router, instance, event) {
-  let { target, preventDefault } = event;
-  let { url, href, isExternal } = normalizeHref(target);
-  let validLink = shouldHandleLink(target);
+  let { target } = event;
+  let anchorTag = findParent(target, 'a');
+
+  if (!anchorTag) {
+    return; // not a link click
+  }
+
+  let { url, href, isExternal } = normalizeHref(anchorTag);
+  let validLink = shouldHandleLink(anchorTag);
 
   // track the click
   if (target.getAttribute('data-tracking-category') && target.getAttribute('data-tracking-action')) {
@@ -107,7 +122,7 @@ function listener(router, instance, event) {
 
   if (validLink) {
 
-    if (target.closest('.django-content')) {
+    if (findParent(target, '.django-content')) {
       _trackLegacyEvent(event, instance);
     }
 
@@ -119,7 +134,7 @@ function listener(router, instance, event) {
 
     let { routeName, params, queryParams } = router.recognize(href);
     router.transitionTo(routeName, params, queryParams);
-    preventDefault.bind(event)();
+    event.preventDefault();
     return false;
   } else if (isExternal && !Ember.testing && !href.startsWith('mailto:')) {
                                              //^^^ don't add _blank to mailto links
