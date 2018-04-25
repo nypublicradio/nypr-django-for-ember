@@ -38,6 +38,10 @@ export default DS.Adapter.extend({
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
+  } else if (response.status === 404) {
+    let error = new DS.NotFoundError();
+    error.url = new URL(response.url).pathname.slice(1);
+    throw error;
   } else {
     var error = new Error(response);
     error.response = response;
