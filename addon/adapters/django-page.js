@@ -13,7 +13,7 @@ export default DS.Adapter.extend({
 
     // BEGIN-SNIPPET django-page-request
     let [path, query] = id.split('?');
-    
+
     // publisher enforces trailing slashes
     // turn "search" into "search/" and "/" into ""
     path = path === '/' ? '' : path.replace(/\/*$/, '/');
