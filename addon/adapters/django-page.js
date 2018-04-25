@@ -43,7 +43,7 @@ function checkStatus(response) {
     error.url = new URL(response.url).pathname.slice(1);
     throw error;
   } else {
-    var error = new Error(response);
+    let error = new Error(response);
     error.response = response;
     throw error;
   }
