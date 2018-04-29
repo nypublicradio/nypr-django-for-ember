@@ -20,7 +20,6 @@ jobs:
           key: v2-node8-yarn-deps-{{ arch }}-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-
       - restore_cache:
           key: bower-deps-{{ checksum "bower.json" }}
       - run:
@@ -60,11 +59,15 @@ jobs:
           key: v2-node8-yarn-deps-{{ arch }}-{{ checksum "yarn.lock" }}
       - restore_cache:
           key: bower-deps-{{ checksum "bower.json" }}
+      - add_ssh_keys:
+          fingerprints:
+            - "15:5b:96:89:c8:2f:e2:e1:0a:e1:85:a4:d4:8e:56:b9"
       - run:
-          name: Deploy to GitHub Pages
-          command: |
-            git checkout gh-pages; git checkout master
-            npx ember deploy production
+         name: Deploy to GitHub Pages
+         command: |
+           git config --global user.email "deploy@circleci"
+           git config --global user.name "deploy"
+           npx ember deploy production
 
 workflows:
   version: 2
