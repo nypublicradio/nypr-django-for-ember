@@ -1,57 +1,6 @@
 // based on https://github.com/intercom/ember-href-to/blob/master/app/instance-initializers/browser/ember-href-to.js
 import config from 'ember-get-config';
 import Ember from 'ember';
-// import { getOwner } from '@ember/application';
-
-function _trackEvent(data, instance) {
-  let metrics = instance.lookup('service:metrics');
-  // For future seekers looking for what handles these attributes, these are the strings you are looking for:
-  // data-tracking-category, data-tracking-action, data-tracking-region, data-tracking-label
-  if (!metrics) {
-    return;
-  }
-
-  let category = data.trackingCategory;
-  let action   = data.trackingAction;
-  let analyticsCode  = '';
-  let model = null;
-  if (data.trackingModel) {
-    let store = instance.lookup('service:store');
-    model = store.peekRecord('story', data.trackingModel);
-  }
-  let region   = data.trackingRegion;
-  let label    = data.trackingLabel;
-  // If a custom tracking label is set on the link, use that
-  if (!label) {
-
-    // format label as either 'code', 'region:code', or just 'region',
-    // depending on what we have
-    if (model) {
-      label = analyticsCode = model.get('analyticsCode');
-    }
-    if (analyticsCode && model) {
-      label = `${region}:${analyticsCode}`;
-    } else if (region) {
-      label = region;
-    }
-  }
-  let eventToTrack = {category, action};
-  // don't add empty properties to events
-  if (label) {
-    eventToTrack.label = label;
-  }
-  if (model) {
-    eventToTrack.model = model;
-  }
-  metrics.trackEvent('GoogleAnalytics', eventToTrack);
-}
-
-function _trackLegacyEvent(event, instance) {
-  let legacyAnalytics = instance.lookup('service:legacy-analytics');
-  if (legacyAnalytics) {
-    legacyAnalytics.dispatch(event);
-  }
-}
 
 function findParent(target, selector) {
   while(target.parentNode) {
@@ -115,16 +64,7 @@ function listener(router, instance, event) {
   let { url, href, isExternal } = normalizeHref(anchorTag);
   let validLink = shouldHandleLink(anchorTag);
 
-  // track the click
-  if (target.getAttribute('data-tracking-category') && target.getAttribute('data-tracking-action')) {
-    _trackEvent(target.dataset, instance);
-  }
-
   if (validLink) {
-
-    if (findParent(target, '.django-content')) {
-      _trackLegacyEvent(event, instance);
-    }
 
     if (url === location.toString()) {
       // could be a valid link, but we still want to short circuit if we'll
