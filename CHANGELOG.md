@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.3.0-beta
+- [FEAUTRE] analytics upgrade
+
 ## 0.2.3
 - [BUGFIX] fix how link clicks are detected
 
