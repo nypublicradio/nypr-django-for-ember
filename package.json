@@ -1,6 +1,6 @@
 {
   "name": "nypr-django-for-ember",
-  "version": "0.2.6",
+  "version": "0.3.0-beta.1",
   "description": "Utilities to integrate and consume legacy content",
   "keywords": [
     "ember-addon"
