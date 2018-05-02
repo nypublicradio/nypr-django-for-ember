@@ -6168,22 +6168,15 @@ default:return"legacy"}}),didReceiveAttrs:function(){this.get("page")!==this._la
 if(n!==this._lastPage){this._lastPage=n
 var i=this.$(".django-content")
 i.empty(),(0,r.isInDom)(n.get("id"))&&(0,r.clearAlienDom)(),this.get("page").appendTo(i).then(function(){e.set("showingOverlay",!0),e.get("session.data.isStaff")&&e.revealStaffLinks(e.$(),t.default.adminRoot),e.$().imagesLoaded().progress(function(e,t){Ember.run(function(){t.img.classList.add("is-loaded")})})})}}})}),define("nypr-django-for-ember/instance-initializers/link-handler",["exports","ember-get-config"],function(e,t){"use strict"
-function n(e,t){for(;e.parentNode;){if(e.matches(t))return e
-e=e.parentNode}}function r(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:location,r=/^https?:/i,i=e.getAttribute("href")||"",o=new URL(i,n).toString(),a=!1,s=t.default.webRoot.replace(r,""),l=o.replace(r,"")
-return i.startsWith("#")||i.startsWith("mailto:")?{url:o,href:i,isExternal:a}:(l.startsWith(s)?i=l.replace(s,"").replace(/^\//,"")||"/":i.startsWith("/")&&!i.startsWith("//")||(i="",a=!0),{url:o,href:i,isExternal:a})}function i(e){var t=r(e,arguments.length>1&&void 0!==arguments[1]?arguments[1]:location).href
-return"_blank"!==e.getAttribute("target")&&(!Array.from(e.classList).includes("ember-view")&&(!e.getAttribute("data-ember-action")&&(!(!t||t.startsWith("#")||t.startsWith("?")||t.startsWith("mailto:"))&&!(t.split(".").length>1))))}Object.defineProperty(e,"__esModule",{value:!0}),e.normalizeHref=r,e.shouldHandleLink=i,e.default={name:"link-handler",initialize:function(e){var t=e.lookup("service:wnyc-routing"),o=function(e,t,o){var a=o.target,s=n(a,"a")
-if(s){var l=r(s),c=l.url,u=l.href,d=l.isExternal,p=i(s)
-if(a.getAttribute("data-tracking-category")&&a.getAttribute("data-tracking-action")&&function(e,t){var n=t.lookup("service:metrics")
-if(n){var r=e.trackingCategory,i=e.trackingAction,o="",a=null
-e.trackingModel&&(a=t.lookup("service:store").peekRecord("story",e.trackingModel))
-var s=e.trackingRegion,l=e.trackingLabel
-l||(a&&(l=o=a.get("analyticsCode")),o&&a?l=s+":"+o:s&&(l=s))
-var c={category:r,action:i}
-l&&(c.label=l),a&&(c.model=a),n.trackEvent("GoogleAnalytics",c)}}(a.dataset,t),p){if(n(a,".django-content")&&function(e,t){var n=t.lookup("service:legacy-analytics")
-n&&n.dispatch(e)}(o,t),c===location.toString())return!1
-var m=e.recognize(u),f=m.routeName,h=m.params,g=m.queryParams
-return e.transitionTo(f,h,g),o.preventDefault(),!1}return!d||Ember.testing||u.startsWith("mailto:")||a.setAttribute("target","_blank"),!0}}.bind(null,t,e)
-document.querySelector(e.rootElement).addEventListener("click",o)}}}),define("nypr-django-for-ember/mixins/legacy-support",["exports"],function(e){"use strict"
+function n(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:location,r=/^https?:/i,i=e.getAttribute("href")||"",o=new URL(i,n).toString(),a=!1,s=t.default.webRoot.replace(r,""),l=o.replace(r,"")
+return i.startsWith("#")||i.startsWith("mailto:")?{url:o,href:i,isExternal:a}:(l.startsWith(s)?i=l.replace(s,"").replace(/^\//,"")||"/":i.startsWith("/")&&!i.startsWith("//")||(i="",a=!0),{url:o,href:i,isExternal:a})}function r(e){var t=n(e,arguments.length>1&&void 0!==arguments[1]?arguments[1]:location).href
+return"_blank"!==e.getAttribute("target")&&(!Array.from(e.classList).includes("ember-view")&&(!e.getAttribute("data-ember-action")&&(!(!t||t.startsWith("#")||t.startsWith("?")||t.startsWith("mailto:"))&&!(t.split(".").length>1))))}Object.defineProperty(e,"__esModule",{value:!0}),e.normalizeHref=n,e.shouldHandleLink=r,e.default={name:"link-handler",initialize:function(e){var t=e.lookup("service:wnyc-routing"),i=function(e,t,i){var o=i.target,a=function(e,t){for(;e.parentNode;){if(e.matches(t))return e
+e=e.parentNode}}(o,"a")
+if(a){var s=n(a),l=s.url,c=s.href,u=s.isExternal
+if(r(a)){if(l===location.toString())return!1
+var d=e.recognize(c),p=d.routeName,m=d.params,f=d.queryParams
+return e.transitionTo(p,m,f),i.preventDefault(),!1}return!u||Ember.testing||c.startsWith("mailto:")||o.setAttribute("target","_blank"),!0}}.bind(null,t,e)
+document.querySelector(e.rootElement).addEventListener("click",i)}}}),define("nypr-django-for-ember/mixins/legacy-support",["exports"],function(e){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0})
 var t=[".js-listen",".js-queue"]
 e.default=Ember.Mixin.create({isLegacyEvent:function(e){return!!(n=e.target,Ember.$(n).closest(t.join(","))).length
