@@ -2,15 +2,15 @@ import { run } from '@ember/runloop';
 import Component from '@ember/component';
 import { computed, get } from '@ember/object';
 import config from 'ember-get-config';
-import LegacySupportMixin from 'nypr-django-for-ember/mixins/legacy-support';
 import {
   isInDom,
   clearAlienDom,
 } from 'nypr-django-for-ember/utils/alien-dom';
+import $ from 'jquery';
 
 import layout from '../templates/components/django-page';
 
-export default Component.extend(LegacySupportMixin, {
+export default Component.extend({
   layout,
   loadingType: computed('page', function() {
     let id = get(this, 'page.id') || '';
@@ -70,6 +70,20 @@ export default Component.extend(LegacySupportMixin, {
 
       });
     }
+  },
+  revealStaffLinks($element, adminRoot) {
+    $element.find('.stf').each(function() {
+      var $elt, $this = $(this);
+      if (this.tagName.toLowerCase() === 'a') {
+        $elt = $this;
+      } else {
+        $this.append($elt = $("<a/>").addClass(this.className));
+      }
+      $elt.html($elt.html() || 'Edit This').attr("target", '_blank');
+      $elt.attr("href", `${adminRoot}/admin/${$this.attr('data-url')}`);
+      $this.show();
+      $this.parent().show();
+    });
   },
   // END-SNIPPET
 });
