@@ -89,10 +89,12 @@ function listener(router, instance, event) {
 export default {
   name: 'link-handler',
   initialize: function(instance) {
-    let router = instance.lookup('service:wnyc-routing');
-    let boundListener = listener.bind(null, router, instance);
-    let root = document.querySelector(instance.rootElement);
+    if (typeof FastBoot === 'undefined') {
+      let router = instance.lookup('service:wnyc-routing');
+      let boundListener = listener.bind(null, router, instance);
+      let root = document.querySelector(instance.rootElement);
 
-    root.addEventListener('click', boundListener);
+      root.addEventListener('click', boundListener);
+    }
   }
 };
