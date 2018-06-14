@@ -55,6 +55,9 @@ function _trackLegacyEvent(event, instance) {
 
 function findParent(target, selector) {
   while(target.parentNode) {
+    if (!target.matches) {
+      target.matches = target.msMatchesSelector; // ie 11 shim
+    }
     if (target.matches(selector)) {
       return target;
     }
@@ -106,9 +109,6 @@ export function shouldHandleLink(node, base = location) {
 
 function listener(router, instance, event) {
   let { target } = event;
-  if (!target.matches) {
-    target.matches = target.msMatchesSelector; // ie 11 shim
-  }
   let anchorTag = findParent(target, 'a');
 
   if (!anchorTag) {
