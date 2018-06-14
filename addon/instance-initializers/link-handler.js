@@ -106,6 +106,9 @@ export function shouldHandleLink(node, base = location) {
 
 function listener(router, instance, event) {
   let { target } = event;
+  if (!target.matches) {
+    target.matches = target.msMatchesSelector; // ie 11 shim
+  }
   let anchorTag = findParent(target, 'a');
 
   if (!anchorTag) {
