@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.2.4
+- [BUGFIX] adds ie 11 shim for .matches DOM api
+
 ## 0.2.3
 - [BUGFIX] fix how link clicks are detected
 
