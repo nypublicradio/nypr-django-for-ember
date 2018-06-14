@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.2.5
+- [BUGFIX] put the ie 11 shim in the correct spot
+
 ## 0.2.4
 - [BUGFIX] adds ie 11 shim for .matches DOM api
 
