@@ -6157,7 +6157,7 @@ try{for(var a,s=e[Symbol.iterator]();!(r=(a=s.next()).done)&&(n.push(a.value),!t
 throw new TypeError("Invalid attempt to destructure non-iterable instance")}}()
 function a(e){if(e.status>=200&&e.status<300)return e
 if(404===e.status){var n=new t.default.NotFoundError
-throw n.url=new URL(e.url).pathname.slice(1),n}var r=new Error(e)
+throw n.url=new URL(e.url).pathname.slice(1),n.response=e,n}var r=new Error(e)
 throw r.response=e,r}e.default=t.default.Adapter.extend({findRecord:function(e,t,s){if((0,i.isInDom)(s))return document
 var l=s.split("?"),c=o(l,2),u=c[0],d=c[1]
 return u="/"===u?"":u.replace(/\/*$/,"/"),d&&(u=u+"?"+d),(0,n.default)(r.default.webRoot+"/"+u,{headers:{"X-WNYC-EMBER":1}}).then(a).then(function(e){return e.text()})},shouldBackgroundReloadRecord:function(){return!1}})}),define("nypr-django-for-ember/components/django-page",["exports","ember-get-config","nypr-django-for-ember/mixins/legacy-support","nypr-django-for-ember/utils/alien-dom","nypr-django-for-ember/templates/components/django-page"],function(e,t,n,r,i){"use strict"
