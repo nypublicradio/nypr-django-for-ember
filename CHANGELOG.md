@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.2.6
+- [BUGFIX] attach response to 404 error objects
+
 ## 0.2.5
 - [BUGFIX] put the ie 11 shim in the correct spot
 
