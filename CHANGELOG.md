@@ -1,7 +1,7 @@
 # nypr-django-for-ember Changelog
 
-## 0.3.0-beta
-- [FEAUTRE] analytics upgrade
+## 0.3.0
+- [FEATURE] analytics upgrade
 
 ## 0.2.6
 - [BUGFIX] attach response to 404 error objects
