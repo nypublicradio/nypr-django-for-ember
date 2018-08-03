@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.3.1
+- [CHORE] bump nypr-ui 
+
 ## 0.3.0
 - [FEATURE] analytics upgrade
 
