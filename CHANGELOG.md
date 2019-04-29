@@ -1,10 +1,13 @@
 # nypr-django-for-ember Changelog
 
+## 0.4.1
+- [ENHANCEMENT] One more bug for Fastboot compatibility
+
 ## 0.4.0
 - [ENHANCEMENT] Fastboot compatibility
 
 ## 0.3.1
-- [CHORE] bump nypr-ui 
+- [CHORE] bump nypr-ui
 
 ## 0.3.0
 - [FEATURE] analytics upgrade
