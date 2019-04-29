@@ -4,6 +4,7 @@ import config from 'ember-get-config';
 import { isInDom } from 'nypr-django-for-ember/utils/alien-dom';
 
 export default DS.Adapter.extend({
+
   findRecord(store, type, id /*, snapshot */) {
     // BEGIN-SNIPPET django-page-top
     if (isInDom(id)) {

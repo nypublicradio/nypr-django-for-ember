@@ -2,6 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 export default DS.Serializer.extend({
+
   // BEGIN-SNIPPET django-page-serializer
   normalizeResponse(store, primaryModelClass, payload, id /*, requestType */) {
     let attributes = {};
@@ -32,7 +33,7 @@ export default DS.Serializer.extend({
 
 // BEGIN-SNIPPET serialize-inline-doc
 // on cold boots, the app consumes the current `document`, so we have to do
-// some clean up to make sure that things like rendered Ember components and 
+// some clean up to make sure that things like rendered Ember components and
 // the <link> and <script> tags for the Ember app aren't consumed as part of the
 // django-page model. If we didn't clean these out, every time this django-page
 // model was rendered, it would load a new version of the ember app within it self.

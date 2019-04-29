@@ -12,6 +12,10 @@ export default Service.extend({
   },
 
   install() {
+    if (typeof document === 'undefined') {
+      // don't run in fastboot
+      return;
+    }
     $(document).ready(() => {
       document.write = (string) => this.write(string);
     });
