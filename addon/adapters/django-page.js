@@ -21,7 +21,16 @@ export default DS.Adapter.extend({
     if (query) {
       path = `${path}?${query}`;
     }
-    return fetch(`${config.webRoot}/${path}`, { headers: {'X-WNYC-EMBER':1}})
+
+    // wqxr django pages live under a different url now that wqxr is on Fastboot
+    let url;
+    if (config.siteId == 2){
+      url = `${config.publisherAPI}/v3/wqxr_djangopages/${path}`
+    } else {
+      url = `${config.webRoot}/${path}`
+    }
+
+    return fetch(`${url}`, { headers: {'X-WNYC-EMBER': 1}})
       .then(checkStatus)
       .then(response => response.text());
     // END-SNIPPET
