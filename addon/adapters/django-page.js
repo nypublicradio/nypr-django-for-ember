@@ -25,7 +25,7 @@ export default DS.Adapter.extend({
     // wqxr django pages live under a different url now that wqxr is on Fastboot
     let url;
     if (config.siteId == 2){
-      url = `${config.publisherAPI}/v3/wqxr_djangopages/${path}`
+      url = `${config.wQXRLegacy}/${path}`
     } else {
       url = `${config.webRoot}/${path}`
     }
