@@ -50,7 +50,11 @@ function checkStatus(response) {
     return response;
   } else if (response.status === 404) {
     let error = new DS.NotFoundError();
-    error.url = new URL(response.url).pathname.slice(1);
+    if (typeof FastBoot === 'undefined') {
+      error.url = new URL(response.url).pathname.slice(1);
+    } else {
+      error.url = URL.parse(response.url).pathname.slice(1);
+    }
     error.response = response;
     throw error;
   } else {
