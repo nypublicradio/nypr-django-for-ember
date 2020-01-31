@@ -8,7 +8,7 @@ import Ember from 'ember';
 // django-page model is already present by testing the requested id (the url path)
 // against a marker provided by django.
 export function isInDom(id) {
-  if (typeof document !== 'undefined') {
+  if (typeof FastBoot === 'undefined') {
     let unrenderedMarker = document.querySelector('[type="text/x-wnyc-marker"]');
     return unrenderedMarker && id === unrenderedMarker.getAttribute('data-url');
   }
