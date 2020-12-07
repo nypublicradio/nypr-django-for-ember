@@ -1,5 +1,8 @@
 # nypr-django-for-ember Changelog
 
+## 0.4.4
+- [ENHANCEMENT] Ability to open a same domain link in same window
+
 ## 0.4.3
 - [ENHANCEMENT] One more more bug for Fastboot compatibility
 
