@@ -46,6 +46,9 @@ export function shouldHandleLink(node, base = location) {
   } else if (node.getAttribute('data-ember-action')) {
     // ignore clicks from ember actions
     return false;
+  }  else if (node.getAttribute('data-skip-link-handler')) {
+    // ignore previous handling methods and opens as a normal link
+    return false;
   } else if (!href || href.startsWith('#') || href.startsWith('?') || href.startsWith('mailto:')) {
     // ignore href-less or otherwise implemented links
     return false;
